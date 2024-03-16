@@ -30,6 +30,7 @@ a {
     padding-right: 5%;
     padding-left: 5%;
     justify-content: space-between;
+    background: none;
 }
 
 
@@ -96,13 +97,64 @@ a {
     line-height: normal;
     letter-spacing: -1.14px;
     margin-left: 18px;
+    z-index: 1;
+}
+
+.navbar-logo {
+    z-index: 1;
 }
 
 .navbar-menu {
     margin-top: 8px;
+    z-index: 1;
+}
+
+.modal {
+    width: 247px;
+    height: 255px;
+    background: #222;;
+    margin-left: 47px;
+    margin-top: 0px;
+    border-radius: 0px 0px 30px 30px;
+    z-index: 0;
+    padding-right: 26px;
+    padding-left: 26px;
+    padding-top: 70px;
+}
+
+.modal_content_button {
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn_menu {
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.modal_content_img_dark {
+    width: 40px
+}
+
+.modal_content_text {
+    margin-top: 12px;
+    margin-left: 12px;
 }
 
 .block-1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wrap-logo-and-menu {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -161,6 +213,7 @@ a {
 }
 
 .slider-p {
+    color: #FFFF;
     width: 512px;
     height: 72px;
     text-align: center;

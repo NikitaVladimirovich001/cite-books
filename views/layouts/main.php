@@ -38,7 +38,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
-    <link rel="stylesheet" href="<?= Yii::$app->request->baseUrl ?>/css/site.css" id="theme">
+    <link rel="stylesheet" href="" id="theme">
 </head>
 <body>
 <?php $this->beginBody() ?>
@@ -46,11 +46,28 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <header>
     <div class="navbar-container">
         <div class="block-1">
-            <img src="image/menu.png" alt="" class="navbar-menu">
-            <img src="../image/menu.png" alt="" class="navbar-menu">
-            <div class="navbar-logo">
-                <a href="<?= Yii::$app->homeUrl ?>"><div class="logo">КнигаТут</div></a>
+<!--            <img src="image/menu.png" alt="" class="navbar-menu">-->
+<!--            <img src="../image/menu.png" alt="" class="navbar-menu" id="btn_menu">-->
+
+            <button id="btn_menu" class="btn_menu">
+                <div class="wrap-logo-and-menu">
+                    <img src="image/menu.png" alt="" class="navbar-menu">
+                    <img src="../image/menu.png" alt="" class="navbar-menu" id="btn_menu">
+                    <div class="navbar-logo">
+                        <a href="<?= Yii::$app->homeUrl ?>"><div class="logo">КнигаТут</div></a>
+                    </div>
+                </div>
+            </button>
+
+            <div class="modal" id="modal">
+                <div class="modal_content">
+                    <div class="model_content_smena">
+                        <button id="switchMode" class="modal_content_button"><img src="image/dark.png" class="modal_content_img_dark"><p class="modal_content_text">Смена темы</p></button>
+                    </div>
+                </div>
             </div>
+
+
         </div>
         <div class="block-2">
             <ul class="navbar-ul">
@@ -61,7 +78,6 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 <?php if (!Yii::$app->user->isGuest): ?>
                     <li class="navbar-li"><a href="<?= Yii::$app->homeUrl ?>">Главное</a></li>
                     <li class="navbar-li"><a href="<?= Url::to(['/site/my']) ?>">Моё</a></li>
-                    <button id="switchMode">смена</button>
                     <li class="navbar-li"><a href="<?= Url::to(['/site/category']) ?>">Категории</a></li>
                     <!--                    <img src="image/search.png" alt="" class="search"-->
                 <?php endif; ?>
