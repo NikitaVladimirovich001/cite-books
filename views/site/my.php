@@ -11,11 +11,11 @@ $this->title = 'Мое';
 
 <div class="books-glav">
     <div class="container-books">
+
         <!--    Избранное    -->
         <div class="brt">
             <div class="zag">
                 <h3>Избранное</h3>
-                <img src="../image/srelka-zag.png" alt="" class="books-strelka">
             </div>
 
             <div class="books-container-book" style="    display: flex;
@@ -41,7 +41,6 @@ $this->title = 'Мое';
         <div class="brt">
             <div class="zag">
                 <h3>История</h3>
-                <img src="../image/srelka-zag.png" alt="" class="books-strelka">
             </div>
 
             <div class="books-container-book" style="    display: flex;

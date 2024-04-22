@@ -32,6 +32,7 @@ class RegisterForm extends Model
             // username and password are both required
             [['username', 'name', 'surname', 'email', 'password', 'password_repeat', 'telefon', ], 'required'],
             ['email', 'email'],
+            ['telefon', 'string'],
             ['username', 'unique', 'targetClass'=>'app\models\User', 'message'=>'Пользователь с таким иминем уже существует'],
             ['telefon', 'unique', 'targetClass'=>'app\models\User', 'message'=>'Пользователь с таким телефоном уже существует'],
             ['email', 'unique', 'targetClass'=>'app\models\User', 'message'=>'Пользователь с такой почтой уже существует'],
@@ -72,7 +73,7 @@ class RegisterForm extends Model
             'telefon' => Yii::t('app', 'Номер телефона'),
             'email' => Yii::t('app', 'Почта'),
             'password' => Yii::t('app', 'Пароль'),
-            'password_repeat' => Yii::t('app', 'Повтор пароля'),
+            'password_repeat' => Yii::t('app', 'Повторите пароль'),
         ];
     }
 }

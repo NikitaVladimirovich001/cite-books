@@ -9,8 +9,12 @@ use yii\bootstrap5\Html;
 
 $this->title = 'Авторизация';
 ?>
-<div class="site-login" style="margin-top: 21px;">
-    <div class="content-container">
+<div class="site-login" style="width: 100%;
+    height: 73vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;">
+    <div class="content-container" style=" margin-bottom: 10px;">
         <center><h1><?= Html::encode($this->title) ?></h1></center>
 
         <?php $form = ActiveForm::begin([
@@ -24,17 +28,15 @@ $this->title = 'Авторизация';
             ],
         ]); ?>
 
-        <?= $form->field($model, 'username', ['template' => '<label class="col-lg-1 col-form-label mr-lg-3" style="color: white;">{label}</label>{input}{hint}{error}',
-        ])->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'username', ['labelOptions' => ['class' => 'label_my']])->textInput(['autofocus' => true, 'class' => 'my-input-class']) ?>
 
-        <?= $form->field($model, 'password', ['template' => '<label class="col-lg-1 col-form-label mr-lg-3" style="color: white;">{label}</label>{input}{hint}{error}',
-        ])->passwordInput() ?>
+        <?= $form->field($model, 'password', ['labelOptions' => ['class' => 'label_my']])->passwordInput(['class' => 'my-input-class']) ?>
 
         <p>Введите данные своей учетной записи</p>
 
         <div class="form-group">
             <div class="offset-lg-1 col-lg-11">
-                <?= Html::submitButton('Войти', ['class' => 'redeng', 'name' => 'login-button', 'style'=>'margin-left: -55px; margin-bottom: 113px;']) ?>
+                <?= Html::submitButton('Войти', ['class' => 'redeng', 'name' => 'login-button', 'style'=>'margin-left: -55px']) ?>
             </div>
         </div>
 

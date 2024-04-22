@@ -8,8 +8,6 @@ use app\assets\AppAsset;
 use app\widgets\Alert;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
-use yii\bootstrap5\Nav;
-use yii\bootstrap5\NavBar;
 use yii\helpers\Url;
 
 AppAsset::register($this);
@@ -22,9 +20,7 @@ $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_k
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon-16x16.png')]);
 ?>
 <?php $this->beginPage() ?>
-<?php //if(Yii::$app->user->isGuest or !Yii::$app->user->identity->is_admin) {
-//    return Yii::$app->response->redirect('/site/index');
-//}?>
+
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
@@ -39,6 +35,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <meta name="theme-color" content="#ffffff">
 
     <link rel="stylesheet" href="" id="theme">
+    <script src="//code.jivo.ru/widget/tffjvfaD2h" async></script>
+    <script src="/web/js/script.js"></script>
+
 </head>
 <body>
 <?php $this->beginBody() ?>
@@ -46,8 +45,6 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <header>
     <div class="navbar-container">
         <div class="block-1">
-<!--            <img src="image/menu.png" alt="" class="navbar-menu">-->
-<!--            <img src="../image/menu.png" alt="" class="navbar-menu" id="btn_menu">-->
 
             <button id="btn_menu" class="btn_menu">
                 <div class="wrap-logo-and-menu">
@@ -62,7 +59,10 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             <div class="modal" id="modal">
                 <div class="modal_content">
                     <div class="model_content_smena">
-                        <button id="switchMode" class="modal_content_button"><img src="image/dark.png" class="modal_content_img_dark"><p class="modal_content_text">Смена темы</p></button>
+                        <button id="switchMode" class="modal_content_button">
+                            <img src="/web/image/dark.png" class="modal_content_img_dark">
+                            <p class="modal_content_text">Смена темы</p>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -79,7 +79,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     <li class="navbar-li"><a href="<?= Yii::$app->homeUrl ?>">Главное</a></li>
                     <li class="navbar-li"><a href="<?= Url::to(['/site/my']) ?>">Моё</a></li>
                     <li class="navbar-li"><a href="<?= Url::to(['/site/category']) ?>">Категории</a></li>
-                    <!--                    <img src="image/search.png" alt="" class="search"-->
+                    <img src="image/search.png" alt="" class="search"
                 <?php endif; ?>
             </ul>
         </div>
@@ -109,7 +109,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <?php endif ?>
     <?= Alert::widget() ?>
     <?= $content ?>
+
 </main>
+
 <?php if (Yii::$app->user->isGuest): ?>
     <footer class="footer" style="margin-top: -19px;">
         <hr class="footer-hr">

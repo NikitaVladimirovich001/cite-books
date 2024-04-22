@@ -7,7 +7,9 @@ use yii\helpers\Url;
 $this->title = 'Главное';
 ?>
 
-<img src="image/genres/horror.png" alt="" class="fon">
+<img src="" id='background' alt="" class="fon">
+
+
 <!--  Категории  -->
 <div class="slider">
     <div class="slider-block-text-p">
@@ -39,7 +41,6 @@ $this->title = 'Главное';
             <div class="brt">
                 <div class="zag">
                     <h3>Новинки</h3>
-                    <img src="image/srelka-zag-1.png" alt="" class="books-strelka">
                 </div>
 
                 <div class="books-container-book" style="    display: flex;
@@ -62,7 +63,6 @@ $this->title = 'Главное';
             <div class="brt">
                 <div class="zag">
                     <h3>Популярное</h3>
-                    <img src="image/srelka-zag.png" alt="" class="books-strelka">
                 </div>
 
                 <div class="books-container-book" style="    display: flex;
@@ -85,7 +85,6 @@ $this->title = 'Главное';
             <div class="brt">
                 <div class="zag">
                     <h3>Авторы</h3>
-                    <img src="image/srelka-zag.png" alt="" class="books-strelka">
                 </div>
 
                 <div class="books-container-book" style="    display: flex;
@@ -108,7 +107,6 @@ $this->title = 'Главное';
             <div class="brt">
                 <div class="zag">
                     <h3>Книги</h3>
-                    <img src="image/srelka-zag.png" alt="" class="books-strelka">
                 </div>
 
                 <div class="books-container-book" style="    display: flex;

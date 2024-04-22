@@ -43,7 +43,11 @@ $this->title = 'Кабинет';
                             <p class="proposal-text-p"><?= $item->body ?></p>
                             <img src="../image/uploads/<?= $item->image ?>" alt="" class="img-proposal">
                              <p class="created_at-user">Статус: <?php echo $item->getStatus() ?></p>
-<!--                             <p class="proposal-text-p">Админестратор: --><?php //echo $item->soob ?><!--</p>-->
+                             <?php if($item->soob):?>
+                                 <p class="proposal-text-p">Админестратор: <?php echo $item->soob ?></p>
+                             <?php else: ?>
+
+                             <?php endif; ?>
                         </div>
                     </div>
                 <?php endforeach; ?>

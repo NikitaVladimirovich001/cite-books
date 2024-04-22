@@ -6,12 +6,15 @@
 
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
-use yii\widgets\MaskedInput;
 
 $this->title = 'Регистрация';
 ?>
-<div class="site-login" style="margin-top: 21px;">
-    <div class="content-container">
+<div class="site-login" style="    width: 100%;
+    height: 153vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;">
+    <div class="content-container" style=" margin-bottom: 10px;">
         <center><h1><?= Html::encode($this->title) ?></h1></center>
 
         <?php $form = ActiveForm::begin([
@@ -25,37 +28,27 @@ $this->title = 'Регистрация';
             ],
         ]); ?>
 
+        <?= $form->field($model, 'username', ['labelOptions' => ['class' => 'label_my']])->textInput(['autofocus' => true, 'class' => 'my-input-class']) ?>
 
-        <?= $form->field($model, 'username', ['template' => '<label class="col-lg-1 col-form-label mr-lg-3" style="color: white;">{label}</label>{input}{hint}{error}',
-        ])->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'name', ['labelOptions' => ['class' => 'label_my']])->textInput(['autofocus' => true, 'class' => 'my-input-class']) ?>
 
-        <?= $form->field($model, 'name', ['template' => '<label class="col-lg-1 col-form-label mr-lg-3" style="color: white;">{label}</label>{input}{hint}{error}',
-        ])->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'surname', ['labelOptions' => ['class' => 'label_my']])->textInput(['autofocus' => true, 'class' => 'my-input-class']) ?>
 
-        <?= $form->field($model, 'surname', ['template' => '<label class="col-lg-1 col-form-label mr-lg-3" style="color: white;">{label}</label>{input}{hint}{error}',
-        ])->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'patronymic', ['labelOptions' => ['class' => 'label_my']])->textInput(['autofocus' => true, 'class' => 'my-input-class']) ?>
 
-        <?= $form->field($model, 'patronymic', ['template' => '<label class="col-lg-1 col-form-label mr-lg-3" style="color: white;">{label}</label>{input}{hint}{error}',
-        ])->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'email', ['labelOptions' => ['class' => 'label_my']])->textInput(['autofocus' => true, 'class' => 'my-input-class']) ?>
 
-        <?= $form->field($model, 'email', ['template' => '<label class="col-lg-1 col-form-label mr-lg-3" style="color: white;">{label}</label>{input}{hint}{error}',
-        ])->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'telefon', ['labelOptions' => ['class' => 'label_my']])->widget(\yii\widgets\MaskedInput::class, [
+            'mask' => '+7(999)-999-99-99',
+            'options' => ['class' => 'my-input-class']
+        ]) ?>
 
-        <?= $form->field($model, 'telefon', ['template' => '<label class="col-lg-1 col-form-label mr-lg-3" style="color: white;">{label}</label>{input}{hint}{error}',
-        ])->widget(MaskedInput::className(), ['mask' => '+7 (999) 999 99 99'])?>
+        <?= $form->field($model, 'password', ['labelOptions' => ['class' => 'label_my']])->passwordInput(['class' => 'my-input-class']) ?>
 
-        <?= $form->field($model, 'password', ['template' => '<label class="col-lg-1 col-form-label mr-lg-3" style="color: white;">{label}</label>{input}{hint}{error}',
-        ])->passwordInput() ?>
-
-        <?= $form->field($model, 'password_repeat', ['template' => '<label class="col-lg-1 col-form-label mr-lg-3" style="color: white;">{label}</label>{input}{hint}{error}',
-        ])->passwordInput() ?>
+        <?= $form->field($model, 'password_repeat', ['labelOptions' => ['class' => 'label_my']])->passwordInput(['class' => 'my-input-class']) ?>
         <p>Соблюдайте конфендициальность</p>
 
-        <div class="form-group">
-            <div class="offset-lg-1 col-lg-11">
-                <?= Html::submitButton('Регистрация', ['class' => 'redeng', 'name' => 'login-button', 'style'=>'']) ?>
-            </div>
-        </div>
+        <?= Html::submitButton('Регистрация', ['class' => 'redeng', 'name' => 'login-button']) ?>
 
         <?php ActiveForm::end(); ?>
     </div>
