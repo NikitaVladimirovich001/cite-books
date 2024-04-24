@@ -120,4 +120,36 @@ window.onclick = function (e) {
     }
 };
 
+// Функция для изменения цвета фона книги
+    function changeColor(colorCode) {
+        var contentDiv = document.getElementById("content");
+        switch (colorCode) {
+            case 1:
+                contentDiv.style.backgroundColor = "white";
+                break;
+            case 2:
+                contentDiv.style.backgroundColor = "beige";
+                break;
+            case 3:
+                contentDiv.style.backgroundColor = "red";
+                break;
+            default:
+                // Если нажата некорректная кнопка, ничего не делаем
+                break;
+        }
+    }
+
+// Добавляем обработчики событий для кнопок изменения цвета
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("button1").addEventListener("click", function () {
+            changeColor(1);
+        });
+        document.getElementById("button2").addEventListener("click", function () {
+            changeColor(2);
+        });
+        document.getElementById("button3").addEventListener("click", function () {
+            changeColor(3);
+        });
+    });
+
 });

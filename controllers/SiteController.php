@@ -12,6 +12,7 @@ use app\models\History;
 use app\models\Proposal;
 use app\models\RegisterForm;
 use app\models\Schedule;
+use app\models\SearchModel;
 use app\models\Society;
 use app\models\User;
 use Yii;
@@ -31,6 +32,7 @@ class SiteController extends Controller
     /**
      * {@inheritdoc}
      */
+
     public function behaviors()
     {
         return [
@@ -75,6 +77,8 @@ class SiteController extends Controller
      *
      * @return Response|string
      */
+
+//    Авторизация
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
@@ -97,6 +101,7 @@ class SiteController extends Controller
         ]);
     }
 
+//    Регистрация
     public function actionRegister()
     {
         if (!Yii::$app->user->isGuest) {
@@ -119,6 +124,8 @@ class SiteController extends Controller
      *
      * @return Response
      */
+
+//    Выход из ссесии
     public function actionLogout()
     {
         Yii::$app->user->logout();
@@ -132,8 +139,11 @@ class SiteController extends Controller
      *
      * @return string
      */
+
+//    Вывод на главной странице отфильтрованных и обычных книг с пагинацией
     public function actionIndex()
     {
+        $searchModel = new \app\models\SearchModel();
         $new = Books::find()->orderBy(['date' => SORT_DESC])->limit(5)->all();
         $query = Books::find()->orderBy('date asc');
         $count = clone $query;
@@ -148,9 +158,10 @@ class SiteController extends Controller
             ->all();
         $categories = Category::find()->all();
         $author = Author::find()->all();
-        return $this->render('index', ['categories'=>$categories, 'populars'=>$populars, 'books'=>$books, 'new'=>$new, 'author'=>$author, 'pages'=>$pages ]);
+        return $this->render('index', ['categories'=>$categories, 'populars'=>$populars, 'books'=>$books, 'new'=>$new, 'author'=>$author, 'pages'=>$pages, 'searchModel'=>$searchModel]);
     }
 
+//    Нахождение рандомной книги
     public function actionRandomBook()
     {
         // Получаем случайный ID книги из базы данных
@@ -167,6 +178,7 @@ class SiteController extends Controller
         }
     }
 
+//    Подробная информация о кнги, создание комментария, вывод текста из кнги, добавление в истрорию
     public function actionBooks($id)
     {
         $books = Books::findOne($id);
@@ -215,6 +227,8 @@ class SiteController extends Controller
         return $this->render('books', $context);
     }
 
+
+//    Добавить в избранное
     public function actionAddToFavorite($id)
     {
         $user_id = Yii::$app->user->id;
@@ -234,6 +248,7 @@ class SiteController extends Controller
         return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
     }
 
+    //    Удалить из избранного
     public function actionRemoveFromFavorite($id)
     {
         $user_id = Yii::$app->user->id;
@@ -250,7 +265,7 @@ class SiteController extends Controller
         return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
     }
 
-
+//    Вывод истории и избранного
     public function actionMy()
     {
         // Получите обновленную историю просмотра пользователя, отсортированную по времени создания в обратном порядке
@@ -269,7 +284,7 @@ class SiteController extends Controller
         return $this->render('my', ['userHistory' => $userHistory, 'favoriteBooks' => $favoriteBooks,]);
     }
 
-
+//    Книги по авторам
     public function actionAuthor()
     {
         if (isset($_GET['id']) && $_GET['id']!='')
@@ -287,6 +302,7 @@ class SiteController extends Controller
             return $this->redirect(['author']);
     }
 
+    //    Книги по категориям
     public function actionMycategory()
     {
         if (isset($_GET['id']) && $_GET['id']!='')
@@ -304,6 +320,7 @@ class SiteController extends Controller
         }
     }
 
+    //    Вывод категорий
     public function actionCategory()
     {
         $categories = Category::find()->all();
@@ -317,6 +334,7 @@ class SiteController extends Controller
      * @return Response|string
      */
 
+    //    Отправка заявки
     public function actionProposal()
     {
         $model = new Proposal();
@@ -335,6 +353,7 @@ class SiteController extends Controller
         ]);
     }
 
+    //    Вывод личного кабинета
     public function actionKabinet()
     {
         $userId = Yii::$app->user->id;
@@ -343,6 +362,52 @@ class SiteController extends Controller
         $proposal = Proposal::find()->where(['user_id' => $userId])->all();
 
         return $this->render('kabinet', ['proposal' => $proposal, 'user'=>$user]);
+    }
+
+//    Поиск книги
+    public function actionSearch()
+    {
+        $searchModel = new \app\models\SearchModel(); // Создаем экземпляр модели поиска
+
+        // Проверяем, был ли отправлен запрос поиска
+        if ($searchModel->load(Yii::$app->request->get())) {
+            // Разбиваем запрос пользователя на отдельные слова
+            $keywords = explode(' ', strtolower($searchModel->query));
+
+            // Создаем массив для хранения наиболее подходящих книг
+            $matchingBooks = [];
+
+            // Перебираем каждое слово из запроса пользователя
+            foreach ($keywords as $keyword) {
+                // Ищем книги, содержащие текущее слово в названии
+                $books = Books::find()->where(['like', 'LOWER(name)', $keyword])->all();
+                // Если найдены книги, добавляем их в массив $matchingBooks
+                if (!empty($books)) {
+                    foreach ($books as $book) {
+                        $matchingBooks[$book->id] = $book;
+                    }
+                }
+            }
+
+            // Если найдены какие-либо книги, выбираем наиболее подходящую
+            if (!empty($matchingBooks)) {
+                // Сортируем книги по количеству совпадающих слов
+                usort($matchingBooks, function ($a, $b) use ($keywords) {
+                    $countA = count(array_intersect($keywords, explode(' ', strtolower($a->name))));
+                    $countB = count(array_intersect($keywords, explode(' ', strtolower($b->name))));
+                    return $countB - $countA;
+                });
+
+                // Перенаправляем пользователя на страницу наиболее подходящей книги
+                return $this->redirect(['books', 'id' => reset($matchingBooks)->id]);
+            }
+        }
+
+        // Если книга не найдена, показываем сообщение об ошибке
+        Yii::$app->session->setFlash('error', 'Книга не найдена.');
+
+        // Перенаправляем пользователя на предыдущую страницу (на главную)
+        return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
     }
 
     public function actionAbout()

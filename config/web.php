@@ -54,6 +54,7 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 '' => 'site/index', // Главная страница
+                'search' => 'site/search',
                 '<controller>/<action>' => '<controller>/<action>',
                 '<controller>/<action>/<id:\d+>' => '<controller>/<action>',
                 '<controller>/<action>/<page:\d+>' => '<controller>/<action>',

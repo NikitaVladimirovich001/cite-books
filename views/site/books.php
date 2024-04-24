@@ -10,6 +10,8 @@ use yii\helpers\Url;
 $this->title = 'Книга';
 ?>
 
+<script src="/web/js/script.js"></script>
+
 <div class="glav-books-container">
     <div class="books-wrap-display-content">
         <div class="block-books-raspol">
@@ -33,26 +35,118 @@ $this->title = 'Книга';
     <!--  Чтение книги и изминение ее  -->
     <div class="container_books_and_change">
         <div class="books_reading_and_change">
+            <!--      Изменение книги      -->
             <div class="block_change">
                 <div class="block_change_text_size">
-                    <ul class="block_change_text_size_ul">
-                        <a href="#"><li class="block_change_text_size_li">1</li></a>
-                        <a href="#" id="switchMode"><li class="block_change_text_size_li">2</li></a>
-                        <a href="#"><li class="block_change_text_size_li">3</li></a>
-                    </ul>
+                        <ul class="block_change_text_size_ul">
+                            <a href="#"  id="button1"><li class="block_change_text_size_li">1</li></a>
+                            <a href="#"  id="button2"><li class="block_change_text_size_li">2</li></a>
+                            <a href="#"  id="button3"><li class="block_change_text_size_li">3</li></a>
+                        </ul>
                     <ul class="block_change_text_size_ul_2">
-                        <a href="#"><li class="block_change_text_size_plus_min">+</li></a>
-                        <a href="#"><li class="block_change_text_size_plus_min">-</li></a>
+                        <a href="#" id="button_plus"><li class="block_change_text_size_plus_min">+</li></a>
+                        <a href="#" id="button_minus"><li class="block_change_text_size_plus_min">-</li></a>
                     </ul>
                 </div>
             </div>
             <div class="books-reding-content-wrap">
-                <div class="books-reding-content">
+                <div class="books-reding-content" id="content">
                     <div class="books-reding-content-container-p">
-                        <p class="books-reding"><?= nl2br($books['file']) ?>
+                        <p class="books-reding" id="bookText"><?= nl2br($books['file']) ?></p>
                     </div>
                 </div>
             </div>
+
+            <script>
+                // Изменение размера
+                document.addEventListener("DOMContentLoaded", function () {
+                    // Функция для изменения размера текста
+                    function changeFontSize(change) {
+                        var contentParagraph = document.getElementById("bookText");
+                        var currentSize = window.getComputedStyle(contentParagraph, null).getPropertyValue('font-size');
+                        var newSize = parseInt(currentSize) + change; // Увеличиваем или уменьшаем размер на значение change
+                        contentParagraph.style.fontSize = newSize + 'px'; // Применяем новый размер текста
+                    }
+
+                    // Добавляем обработчики событий для кнопок изменения размера текста
+                    document.getElementById("button_plus").addEventListener("click", function () {
+                        changeFontSize(2); // Увеличиваем размер текста на 2 пикселя
+                    });
+
+                    document.getElementById("button_minus").addEventListener("click", function () {
+                        changeFontSize(-2); // Уменьшаем размер текста на 2 пикселя
+                    });
+                });
+
+                document.addEventListener("DOMContentLoaded", function () {
+                    // Функция для изменения размера текста
+                    function changeFontSize(change) {
+                        var contentParagraph = document.getElementById("bookText");
+                        var currentSize = parseInt(window.getComputedStyle(contentParagraph, null).getPropertyValue('font-size'));
+
+                        // Устанавливаем максимальный и минимальный размеры
+                        var maxSize = 32;
+                        var minSize = 12;
+
+                        // Вычисляем новый размер текста
+                        var newSize = currentSize + change;
+
+                        // Проверяем, чтобы новый размер не превышал максимальное значение
+                        if (newSize > maxSize) {
+                            newSize = maxSize;
+                        }
+
+                        // Проверяем, чтобы новый размер не был меньше минимального значения
+                        if (newSize < minSize) {
+                            newSize = minSize;
+                        }
+
+                        // Применяем новый размер к тексту
+                        contentParagraph.style.fontSize = newSize + 'px';
+                    }
+
+                    // Добавляем обработчики событий для кнопок изменения размера текста
+                    document.getElementById("button_plus").addEventListener("click", function () {
+                        changeFontSize(2); // Увеличиваем размер текста на 2 пикселя
+                    });
+
+                    document.getElementById("button_minus").addEventListener("click", function () {
+                        changeFontSize(-2); // Уменьшаем размер текста на 2 пикселя
+                    });
+                });
+
+                // Функция для изменения цвета фона книги
+                function changeColor(colorCode) {
+                    var contentDiv = document.getElementById("content");
+                    switch (colorCode) {
+                        case 1:
+                            contentDiv.style.backgroundColor = "#ffffff";
+                            break;
+                        case 2:
+                            contentDiv.style.backgroundColor = "beige";
+                            break;
+                        case 3:
+                            contentDiv.style.backgroundColor = "#6f7a93";
+                            break;
+                        default:
+                            // Если нажата некорректная кнопка, ничего не делаем
+                            break;
+                    }
+                }
+
+                // Добавляем обработчики событий для кнопок изменения цвета
+                document.addEventListener("DOMContentLoaded", function () {
+                    document.getElementById("button1").addEventListener("click", function () {
+                        changeColor(1);
+                    });
+                    document.getElementById("button2").addEventListener("click", function () {
+                        changeColor(2);
+                    });
+                    document.getElementById("button3").addEventListener("click", function () {
+                        changeColor(3);
+                    });
+                });
+            </script>
         </div>
     </div>
     <!--  Комментарий  -->

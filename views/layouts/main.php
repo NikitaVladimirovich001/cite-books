@@ -5,6 +5,7 @@
 /** @var string $content */
 
 use app\assets\AppAsset;
+use app\components\SearchWidget;
 use app\widgets\Alert;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
@@ -69,20 +70,50 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
 
         </div>
-        <div class="block-2">
+        <div class="block-2" id="navigationBlock">
             <ul class="navbar-ul">
                 <?php if (Yii::$app->user->isGuest): ?>
-                    <li class="navbar-li" style="margin-left: 90px;"><a href="<?= Yii::$app->homeUrl ?>" id="button1">Главное</a>
-                    </li>
+                    <li class="navbar-li" style="margin-left: 90px;"><a href="<?= Yii::$app->homeUrl ?>" id="button1">Главное</a></li>
                 <?php endif; ?>
                 <?php if (!Yii::$app->user->isGuest): ?>
                     <li class="navbar-li"><a href="<?= Yii::$app->homeUrl ?>">Главное</a></li>
                     <li class="navbar-li"><a href="<?= Url::to(['/site/my']) ?>">Моё</a></li>
                     <li class="navbar-li"><a href="<?= Url::to(['/site/category']) ?>">Категории</a></li>
-                    <img src="image/search.png" alt="" class="search"
+                    <li class="navbar-li">
+                        <button id="searchButton">
+                            <img src="image/search1.png" alt="" class="search">
+                        </button>
+                    </li>
                 <?php endif; ?>
             </ul>
         </div>
+
+        <div class="block-2" id="searchBlock" style="display: none;">
+            <div style="display: flex;">
+                <?php echo SearchWidget::widget(); ?>
+            </div>
+        </div>
+
+        <button id="closeSearchButton" class="button-zak" style="display: none; margin-top: 7px; background-color: transparent; border: none; cursor: pointer; margin-left: 5px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#C6C6C6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+
+        <script>
+            document.getElementById('searchButton').addEventListener('click', function() {
+                document.getElementById('navigationBlock').style.display = 'none';
+                document.getElementById('searchBlock').style.display = 'block';
+                document.getElementById('closeSearchButton').style.display = 'block'; // Показываем кнопку закрытия поиска
+            });
+
+            document.getElementById('closeSearchButton').addEventListener('click', function() {
+                document.getElementById('navigationBlock').style.display = 'block';
+                document.getElementById('searchBlock').style.display = 'none';
+                document.getElementById('closeSearchButton').style.display = 'none'; // Скрываем кнопку закрытия поиска
+            });
+        </script>
         <div class="block-3">
             <ul class="navbar-ul">
                 <?php if (Yii::$app->user->isGuest): ?>

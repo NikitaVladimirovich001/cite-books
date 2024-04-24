@@ -1,11 +1,30 @@
 <?php
 
+use yii\bootstrap5\Html;
 use yii\bootstrap5\LinkPager;
 use yii\helpers\Url;
 
 
 $this->title = 'Главное';
 ?>
+
+<?php
+
+use yii\widgets\ActiveForm;
+
+$form = ActiveForm::begin([
+    'action' => ['site/search'], // Указываем путь к действию, которое будет обрабатывать поиск
+    'method' => 'get',
+]);
+?>
+
+<!--<div class="q" style="display: flex">-->
+<!--    --><?//= $form->field($searchModel, 'query')->textInput(['placeholder' => 'Поиск книги...', 'class'=>'my-input-search'])->label(false) ?>
+<!---->
+<!--    --><?//= Html::submitButton('Искать', ['class' => 'btn btn-primary']) ?>
+<!--</div>-->
+
+<?php ActiveForm::end(); ?>
 
 <img src="" id='background' alt="" class="fon">
 
