@@ -13,28 +13,7 @@ use yii\grid\GridView;
 $this->title = Yii::t('app', 'Книга');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="books-index" style="display: flex">
-    <aside>
-        <span class="logo">Админка</span>
-
-        <ul style="margin-top: 71px;">
-            <a href="<?php echo Url::toRoute(['site/'])?>"><li><i class="fa fa-solid fa-check"></i>Выйти</li></a>
-        </ul>
-        <h3>Основные</h3>
-        <ul>
-            <a href="<?php echo Url::toRoute(['category/index'])?>"><li><i class="fas fa-home"></i>Категории</li></a>
-            <a href="<?php echo Url::toRoute(['books/index'])?>"><li><i class="fas fa-address-card"></i>Книги</li></a>
-            <a href="<?php echo Url::toRoute(['proposal/index'])?>"><li><i class="fa fa-solid fa-check"></i>Обращения</li></a>
-            <a href="<?php echo Url::toRoute(['author/index'])?>"><li><i class="fa fa-solid fa-check"></i>Авторы</li></a>
-        </ul>
-    </aside>
-
-    <div class="d-2" style="margin-left: 40px">
-        <h1><?= Html::encode($this->title) ?></h1>
-
-        <p>
-            <?= Html::a(Yii::t('app', 'Создать книгу'), ['create'], ['class' => 'btn btn-success']) ?>
-        </p>
+<div class="books-index">
 
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -50,8 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'file:ntext',
                 'image',
                 //'date',
-                //'author_id',
-                //'category_id',
+                'author_id',
+                'category_id',
                 //'viewed',
                 [
                     'class' => ActionColumn::className(),
@@ -61,6 +40,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
         ]); ?>
-    </div>
+
+    <p>
+        <?= Html::a(Yii::t('app', 'Создать книгу'), ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
 
 </div>

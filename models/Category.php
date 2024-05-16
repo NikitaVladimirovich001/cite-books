@@ -30,9 +30,10 @@ class Category extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'opisanie', 'image'], 'required'],
+//            [['name', 'opisanie', 'image'], 'required'],
             [['opisanie'], 'string'],
-            [['name', 'image'], 'string', 'max' => 256],
+            [['image'], 'file', 'extensions' => 'png, jpg', 'on'=>'update'],
+            [['name'], 'string', 'max' => 256],
         ];
     }
 
@@ -57,5 +58,16 @@ class Category extends \yii\db\ActiveRecord
     public function getBooks()
     {
         return $this->hasMany(Books::class, ['category_id' => 'id']);
+    }
+
+
+    public function upload()
+    {
+        if ($this->image !== null) {
+            $this->image->saveAs('image/genres/' . $this->image->baseName . '.' . $this->image->extension);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

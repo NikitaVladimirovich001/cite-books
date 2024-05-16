@@ -38,11 +38,12 @@ class Books extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'opisanie', 'file', 'image', 'author_id', 'category_id', 'viewed'], 'required'],
+//            [['name', 'opisanie', 'file', 'image', 'author_id', 'category_id'], 'required'],
             [['opisanie'], 'string'],
-            [['date'], 'safe'],
-            [['author_id', 'category_id', 'viewed'], 'integer'],
-            [['name', 'file', 'image'], 'string', 'max' => 256],
+            [['author_id', 'category_id'], 'integer'],
+            ['name', 'string', 'max' => 256],
+            [['image'], 'file', 'extensions' => 'png, jpg', 'on'=>'update'],
+            [['file'], 'file', 'on'=>'update'],
             [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => Author::class, 'targetAttribute' => ['author_id' => 'id']],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['category_id' => 'id']],
         ];
@@ -66,41 +67,16 @@ class Books extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * Gets query for [[Author]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
     public function getAuthor()
     {
         return $this->hasOne(Author::class, ['id' => 'author_id']);
     }
 
-    /**
-     * Gets query for [[Authors]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getAuthors()
-    {
-        return $this->hasMany(Author::class, ['books_id' => 'id']);
-    }
-
-    /**
-     * Gets query for [[Category]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
     public function getCategory()
     {
         return $this->hasOne(Category::class, ['id' => 'category_id']);
     }
 
-    /**
-     * Gets query for [[Comments]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
     public function getComments()
     {
         return $this->hasMany(Comment::class, ['books_id' => 'id']);
@@ -109,5 +85,31 @@ class Books extends \yii\db\ActiveRecord
     public function getHistories()
     {
         return $this->hasMany(History::class, ['books_id' => 'id']);
+    }
+
+    public function uploadImage()
+    {
+        if ($this->validate()) {
+            $this->image->saveAs('image/books/' . $this->image->baseName . '.' . $this->image->extension);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function upload()
+    {
+        if ($this->validate()) {
+            if ($this->file->saveAs('file/' . $this->file->baseName . '.' . $this->file->extension)) {
+                Yii::$app->session->setFlash('success', 'Файл успешно загружен.');
+                return true;
+            } else {
+                Yii::$app->session->setFlash('error', 'Не удалось сохранить файл.');
+                return false;
+            }
+        } else {
+            Yii::$app->session->setFlash('error', 'Ошибка валидации: ' . json_encode($this->errors));
+            return false;
+        }
     }
 }

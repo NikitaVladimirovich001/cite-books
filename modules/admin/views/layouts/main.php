@@ -9,7 +9,6 @@ use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
-use yii\helpers\Url;
 
 AppAsset::register($this);
 
@@ -21,32 +20,61 @@ $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_k
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
 ?>
 <?php $this->beginPage() ?>
-<?php if(Yii::$app->user->isGuest or !Yii::$app->user->identity->is_admin) {
-    return Yii::$app->response->redirect('/site/index');
-}?>
+<?php if(Yii::$app->user->isGuest or !Yii::$app->user->identity->is_admin)
+    {
+        return Yii::$app->response->redirect('/site/index');
+    }
+?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
+<html lang="<?= Yii::$app->language ?>" class="h-100">
 <head>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body style="background: #445986">
-    <?php $this->beginBody() ?>
+<body class="d-flex flex-column h-100">
+<?php $this->beginBody() ?>
 
+<header id="header" style="padding-bottom: 70px">
+    <?php
+    NavBar::begin([
+        'brandLabel' => 'Админ-панель',
+        'brandUrl' => Yii::$app->homeUrl,
+        'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
+    ]);
+    echo Nav::widget([
+        'options' => ['class' => 'navbar-nav'],
+        'items' => [
+            ['label' => 'Книги', 'url' => ['books/index']],
+            ['label' => 'Авторы', 'url' => ['author/index']],
+            ['label' => 'Жанры', 'url' => ['category/index']],
+            ['label' => 'Обращения', 'url' => ['proposal/index']],
+            Yii::$app->user->isGuest
+                ? ['label' => 'Войти', 'url' => ['/site/login']]
+                : '<li class="nav-item">'
+                . Html::beginForm(['/site/logout'])
+                . Html::submitButton(
+                    'Выйти',
+                    ['class' => 'nav-link btn btn-link logout']
+                )
+                . Html::endForm()
+                . '</li>'
+        ]
+    ]);
+    NavBar::end();
+    ?>
+</header>
 
+<main id="main" class="flex-shrink-0" role="main" style="background: white;">
+    <div class="container">
+        <?php if (!empty($this->params['breadcrumbs'])): ?>
+            <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
+        <?php endif ?>
+        <?= Alert::widget() ?>
+        <?= $content ?>
+    </div>
+</main>
 
-
-        <main id="main" class="flex-shrink-0" role="main">
-            <?php if (!empty($this->params['breadcrumbs'])): ?>
-                <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
-            <?php endif ?>
-            <?= Alert::widget() ?>
-            <?= $content ?>
-        </main>
-
-
-    <?php $this->endBody() ?>
+<?php $this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>
-

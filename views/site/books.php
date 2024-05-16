@@ -27,6 +27,7 @@ $this->title = 'Книга';
                 </div>
                 <p class="author"><?= $books->author->nsp ?></p>
                 <p class="books-podrob">О книге</p>
+<!--                <div>Количество просмотров: --><?//= $books->views ?><!--</div>-->
                 <p class="books-opisanie"><?= $books['opisanie'] ?></p>
             </div>
         </div>
@@ -52,7 +53,7 @@ $this->title = 'Книга';
             <div class="books-reding-content-wrap">
                 <div class="books-reding-content" id="content">
                     <div class="books-reding-content-container-p">
-                        <p class="books-reding" id="bookText"><?= nl2br($books['file']) ?></p>
+                        <p class="books-reding" id="bookText"><?= nl2br(file_get_contents('file/' . $books['file'])) ?></p>
                     </div>
                 </div>
             </div>
@@ -173,15 +174,15 @@ $this->title = 'Книга';
                 <div class="small d-flex justify-content-start">
                     <a href="#!" class="d-flex align-items-center me-3">
                         <i class="far fa-thumbs-up me-2"></i>
-                        <p class="mb-0">Like</p>
+                        <p class="mb-0"></p>
                     </a>
                     <a href="#!" class="d-flex align-items-center me-3">
                         <i class="far fa-comment-dots me-2"></i>
-                        <p class="mb-0">Comment</p>
+                        <p class="mb-0"></p>
                     </a>
                     <a href="#!" class="d-flex align-items-center me-3">
                         <i class="fas fa-share me-2"></i>
-                        <p class="mb-0">Share</p>
+                        <p class="mb-0"></p>
                     </a>
                 </div>
             </div>
@@ -195,8 +196,7 @@ $this->title = 'Книга';
             <div class="form-group">
                 <div class="col-md-12">
                     <?php $model = new \app\models\Comment();
-                    echo $form->field($model, 'body', ['template' => '<label class="col-lg-1 col-form-label mr-lg-3" style="color: white;">{label}</label>{input}{hint}{error}',
-                    ])->textArea([]) ?>
+                    echo $form->field($model, 'body', ['labelOptions' => ['class' => 'label_my']])->textArea(['class' => 'my-input-class']) ?>
                     <button class="redeng">Отправить</button>
                 </div>
             </div>

@@ -49,7 +49,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
             <button id="btn_menu" class="btn_menu">
                 <div class="wrap-logo-and-menu">
-                    <img src="image/menu.png" alt="" class="navbar-menu">
+<!--                    <img src="image/menu.png" alt="" class="navbar-menu">-->
                     <img src="../image/menu.png" alt="" class="navbar-menu" id="btn_menu">
                     <div class="navbar-logo">
                         <a href="<?= Yii::$app->homeUrl ?>"><div class="logo">КнигаТут</div></a>
@@ -61,7 +61,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 <div class="modal_content">
                     <div class="model_content_smena">
                         <button id="switchMode" class="modal_content_button">
-                            <img src="/web/image/dark.png" class="modal_content_img_dark">
+                            <img src="/image/dark.png" class="modal_content_img_dark">
                             <p class="modal_content_text">Смена темы</p>
                         </button>
                     </div>
@@ -78,10 +78,10 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 <?php if (!Yii::$app->user->isGuest): ?>
                     <li class="navbar-li"><a href="<?= Yii::$app->homeUrl ?>">Главное</a></li>
                     <li class="navbar-li"><a href="<?= Url::to(['/site/my']) ?>">Моё</a></li>
-                    <li class="navbar-li"><a href="<?= Url::to(['/site/category']) ?>">Категории</a></li>
+                    <li class="navbar-li"><a href="<?= Url::to(['/site/category']) ?>">Жанры</a></li>
                     <li class="navbar-li">
                         <button id="searchButton">
-                            <img src="image/search1.png" alt="" class="search">
+                            <img src="../image/search1.png" alt="" class="search">
                         </button>
                     </li>
                 <?php endif; ?>
@@ -124,9 +124,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     <li class="navbar-li">
                         <?= Html::a('Выйти', ['/site/logout'], ['class' => 'navbar-li', 'data' => ['method' => 'post']]) ?>
                     </li>
-                    <a href="<?= Url::to(['/site/kabinet']) ?>"><img src="../image/avatar.png" alt=""
-                                                                     class="img-kabinet"></a></li>
-                    <a href="<?= Url::to(['/site/kabinet']) ?>"><img src="image/avatar.png" alt="" class="img-kabinet"></a></li>
+<!--                    <a href="--><?//= Url::to(['/site/kabinet']) ?><!--"><img src="../image/avatar.png" alt=""-->
+<!--                                                                     class="img-kabinet"></a></li>-->
+                    <a href="<?= Url::to(['/site/kabinet']) ?>"><img src="../image/avatar.png" alt="" class="img-kabinet"></a></li>
                 <?php endif; ?>
             </ul>
         </div>
@@ -169,7 +169,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         </div>
         <hr class="footer-hr">
         <div class="f">
-            <p class="footer-p">© 2023 КнигаТут. 18+</p>
+            <p class="footer-p">© 2024 КнигаТут. 18+</p>
             <p class="footer-p">Проект разработан Лапиным Никитой В.</p>
         </div>
     </footer>

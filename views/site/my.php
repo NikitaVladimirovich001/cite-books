@@ -25,7 +25,7 @@ $this->title = 'Мое';
                 <?php else: ?>
                     <?php foreach($favoriteBooks as $item): ?>
                         <div class="books_disp">
-                            <a href="<?= Url::toRoute(['site/books', 'id' => $item->books->id, 'books_id' => $item->books->id]); ?>" class="books-a">
+                            <a href="<?= Url::toRoute(['site/books', 'id' => $item->books->id]); ?>" class="books-a">
                                 <div class="opisanie">
                                     <img src="../image/books/<?= $item->books->image ?>" alt="" class="books-img">
                                     <p class="opisanie-p"><?= $item->books->name ?></p>
@@ -50,7 +50,7 @@ $this->title = 'Мое';
                 <?php else: ?>
                     <?php foreach($userHistory as $item): ?>
                     <div class="books_disp">
-                        <a href="<?= Url::toRoute(['site/books', 'id' => $item->books->id, 'books_id' => $item->books->id]); ?>" class="books-a">
+                        <a href="<?= Url::toRoute(['site/books', 'id' => $item->books->id]); ?>" class="books-a">
                             <div class="opisanie">
                                 <img src="../image/books/<?= $item->books->image ?>" alt="" class="books-img">
                                 <p class="opisanie-p"><?= $item->books->name ?></p>

@@ -17,7 +17,7 @@ $this->title = 'Авторы';
             flex-wrap: wrap;">
                 <?php foreach($books as $item): ?>
                     <div class="books_disp">
-                        <a href="<?=Url::toRoute(['site/books', 'id' => $item['id'], 'books_id'=>$item['id']]);?>" class="books-a">
+                        <a href="<?=Url::toRoute(['site/books', 'id' => $item['id']]);?>" class="books-a">
                             <div class="opisanie">
                                 <img src="../image/books/<?= $item['image'] ?>" alt="" class="books-img">
                                 <p class="opisanie-p"><?= $item['name'] ?></p>

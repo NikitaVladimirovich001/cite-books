@@ -1,5 +1,4 @@
 <?php
-
 namespace app\models;
 
 use yii\base\Model;
@@ -17,7 +16,7 @@ class AuthorSearch extends Author
     public function rules()
     {
         return [
-            [['id', 'books_id'], 'integer'],
+            [['id'], 'integer'],
             [['nsp', 'image'], 'safe'],
         ];
     }
@@ -59,7 +58,6 @@ class AuthorSearch extends Author
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'books_id' => $this->books_id,
         ]);
 
         $query->andFilterWhere(['like', 'nsp', $this->nsp])

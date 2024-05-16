@@ -4,9 +4,11 @@ namespace app\modules\admin\controllers;
 
 use app\models\Books;
 use app\models\BooksSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * BooksController implements the CRUD actions for Books model.
@@ -70,7 +72,13 @@ class BooksController extends Controller
         $model = new Books();
 
         if ($this->request->isPost) {
+            $model->image = UploadedFile::getInstance($model, 'image');
+            $model->file = UploadedFile::getInstance($model, 'file'); // Получаем экземпляр загруженного файла
             if ($model->load($this->request->post()) && $model->save()) {
+                if ($model->file) {
+                    $model->file->saveAs('file/' . $model->file->baseName . '.' . $model->file->extension); // Сохраняем файл
+                    $model->image->saveAs('image/books/' . $model->image->baseName . '.' . $model->image->extension); // Сохраняем изображение
+                }
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -93,8 +101,19 @@ class BooksController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        // Получаем экземпляр загруженного файла
+        $model->file = UploadedFile::getInstance($model, 'file');
+        $model->image = UploadedFile::getInstance($model, 'image');
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->file) {
+                    $model->upload(); // Вызываем метод upload() модели для сохранения файла
+                    $model->uploadImage();
+                    $model->save();
+                }
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [

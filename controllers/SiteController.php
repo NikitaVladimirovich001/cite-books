@@ -184,6 +184,11 @@ class SiteController extends Controller
         $books = Books::findOne($id);
         $user_id = Yii::$app->user->id;
 
+        // Увеличить счетчик просмотров книги в Redis
+//        $redis = Yii::$app->redis;
+//        $redis->incr("book:$id:views");
+//        $views = $redis->get("book:$id:views");
+
         $addToFavoriteUrl = Url::to(['site/add-to-favorite', 'id' => $books->id]);
         $removeFromFavoriteUrl = Url::to(['site/remove-from-favorite', 'id' => $books->id]);
 
@@ -222,7 +227,8 @@ class SiteController extends Controller
         $favorite = Favorites::findOne(['user_id' => $user_id, 'books_id' => $id]);
 
         $context = ['author' => $author, 'books' => $books, 'model' => $model, 'comments' => $comments,
-            'addToFavoriteUrl' => $addToFavoriteUrl, 'removeFromFavoriteUrl' => $removeFromFavoriteUrl, 'favorite' => $favorite];
+            'addToFavoriteUrl' => $addToFavoriteUrl, 'removeFromFavoriteUrl' => $removeFromFavoriteUrl,
+            'favorite' => $favorite];
 
         return $this->render('books', $context);
     }
@@ -307,16 +313,25 @@ class SiteController extends Controller
     {
         if (isset($_GET['id']) && $_GET['id']!='')
         {
-            $categories = Category::find()->where(['id'=>$_GET['id']])->asArray()->one();
+            // Получаем данные о категории
+            $category = Category::find()->where(['id'=>$_GET['id']])->one();
 
-            $books = Books::find()->where(['category_id'=>$_GET['id']])->with('author')->asArray()->all();
+            if ($category !== null) {
+                // Получаем все книги в выбранной категории
+                $books = Books::find()->where(['category_id'=>$_GET['id']])->with('author')->all();
 
-            $context = ['categories' => $categories, 'books' => $books];
+                // Формируем контекст для передачи в представление
+                $context = ['category' => $category, 'books' => $books];
 
-            return $this->render('mycategory', $context);
+                return $this->render('mycategory', $context);
+            } else {
+                // Если категория не найдена, можно перенаправить пользователя на страницу с сообщением об ошибке или другое действие
+                return $this->redirect(['error']);
+            }
         }
         else {
-            return $this->redirect(['mycategory']);
+            // В случае, если ID категории не был передан, можно выполнить другое действие, например, перенаправить на другую страницу
+            return $this->redirect(['category']);
         }
     }
 

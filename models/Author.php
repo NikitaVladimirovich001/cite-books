@@ -4,43 +4,24 @@ namespace app\models;
 
 use Yii;
 
-/**
- * This is the model class for table "author".
- *
- * @property int $id
- * @property string $nsp
- * @property string $image
- * @property int|null $books_id
- *
- * @property Books $books
- * @property Books[] $books0
- */
 class Author extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'author';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
             [['nsp', 'image'], 'required'],
-            [['books_id'], 'integer'],
-            [['nsp', 'image'], 'string', 'max' => 256],
-            [['books_id'], 'exist', 'skipOnError' => true, 'targetClass' => Books::class, 'targetAttribute' => ['books_id' => 'id']],
+//            [['books_id'], 'integer'],
+            ['nsp', 'string', 'max' => 256],
+            ['image', 'file'],
+//            [['books_id'], 'exist', 'skipOnError' => true, 'targetClass' => Books::class, 'targetAttribute' => ['books_id' => 'id']],
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
@@ -51,23 +32,18 @@ class Author extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * Gets query for [[Books]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getBooks()
+    public function getBook()
     {
         return $this->hasOne(Books::class, ['id' => 'books_id']);
     }
 
-    /**
-     * Gets query for [[Books0]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getBooks0()
+    public function upload()
     {
-        return $this->hasMany(Books::class, ['author_id' => 'id']);
+        if ($this->validate()) {
+            $this->image->saveAs('image/author/' . $this->image->baseName . '.' . $this->image->extension);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

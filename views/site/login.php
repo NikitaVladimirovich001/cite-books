@@ -32,7 +32,7 @@ $this->title = 'Авторизация';
 
         <?= $form->field($model, 'password', ['labelOptions' => ['class' => 'label_my']])->passwordInput(['class' => 'my-input-class']) ?>
 
-        <p>Введите данные своей учетной записи</p>
+<!--        <p>Введите данные своей учетной записи</p>-->
 
         <div class="form-group">
             <div class="offset-lg-1 col-lg-11">

@@ -183,9 +183,24 @@ a {
     width: 100%;
     height: 546px;
     z-index: -1;
-    top: 0px;
+    top: 0;
     object-fit: cover;
 }
+
+/*.bel_fon {*/
+/*    position: absolute;*/
+/*    width: 100%;*/
+/*    height: 546px;*/
+/*    z-index: -1;*/
+/*    top: 0;*/
+/*    object-fit: cover;*/
+/*    !*background-size: cover;*!*/
+/*    !*background-image: url('../image/bel_fon.jpg');*!*/
+/*}*/
+
+/*.dark_fon {*/
+/*    display: none;*/
+/*}*/
 
 .button-slider {
     margin-top: 57px;
@@ -804,14 +819,16 @@ aside ul li:hover, aside ul a:hover {
 
 /* Поиск */
 .my-input-search {
-    width: 136%;
+    width: 243%;
+    height: 37px;
+    margin-top: 10px;
     padding: .375rem .75rem;
     font-size: 1rem;
     line-height: 1.5;
     background-color: #fff;
     background-clip: padding-box;
     border: 1px solid #ced4da;
-    border-radius: .25rem;
+    border-radius: 10px;
 }
 
 .my-input-search:focus {
@@ -819,6 +836,28 @@ aside ul li:hover, aside ul a:hover {
     border-color: transparent;
     box-shadow: none;
 }
+
+/* кнопка закрытия */
+.button-zak {
+    border: none;
+    background: none;
+}
+
+#searchButton {
+    border: none;
+    background: none;
+}
+
+/* изображение поиска */
+.search {
+    width: 21px ;
+}
+
+
+
+
+
+
 
 
 

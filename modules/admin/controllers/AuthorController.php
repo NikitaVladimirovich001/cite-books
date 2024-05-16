@@ -7,6 +7,7 @@ use app\models\AuthorSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * AuthorController implements the CRUD actions for Author model.
@@ -70,8 +71,21 @@ class AuthorController extends Controller
         $model = new Author();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            $model->load($this->request->post());
+
+            // Получаем экземпляр загруженного изображения
+            $model->image = UploadedFile::getInstance($model, 'image');
+
+            if ($model->validate()) {
+                // Если изображение было загружено, сохраняем его
+                if ($model->image) {
+                    $model->upload();
+                }
+
+                // Сохраняем автора
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -81,7 +95,6 @@ class AuthorController extends Controller
             'model' => $model,
         ]);
     }
-
     /**
      * Updates an existing Author model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -93,10 +106,28 @@ class AuthorController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost) {
+            // Загрузка данных из формы в модель
+            if ($model->load($this->request->post())) {
+                // Получение экземпляра загруженного изображения
+                $model->image = UploadedFile::getInstance($model, 'image');
+
+                // Проверка валидности модели и загрузка изображения
+                if ($model->validate()) {
+                    // Если изображение было загружено, сохраняем его
+                    if ($model->image) {
+                        $model->upload();
+                    }
+
+                    // Сохраняем модель автора
+                    if ($model->save()) {
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                }
+            }
         }
 
+        // Отображение формы обновления существующего автора
         return $this->render('update', [
             'model' => $model,
         ]);

@@ -18,15 +18,12 @@ $form = ActiveForm::begin([
 ]);
 ?>
 
-<!--<div class="q" style="display: flex">-->
-<!--    --><?//= $form->field($searchModel, 'query')->textInput(['placeholder' => 'Поиск книги...', 'class'=>'my-input-search'])->label(false) ?>
-<!---->
-<!--    --><?//= Html::submitButton('Искать', ['class' => 'btn btn-primary']) ?>
-<!--</div>-->
-
 <?php ActiveForm::end(); ?>
 
 <img src="" id='background' alt="" class="fon">
+<!--<img class="fon">-->
+<!--<img src="../image/bel_fon.jpg" alt="" class="bel_fon">-->
+<!--<img src="../image/genres/horror.png" alt="" class="dark_fon">-->
 
 
 <!--  Категории  -->
@@ -88,7 +85,7 @@ $form = ActiveForm::begin([
     flex-wrap: wrap;">
                     <?php foreach($populars as $item): ?>
                         <div class="books_disp">
-                            <a href="<?=Url::toRoute(['site/books', 'id' => $item->id, 'books_id'=>$item->id]);?>" class="books-a">
+                            <a href="<?=Url::toRoute(['site/books', 'id' => $item->id]);?>" class="books-a">
                                 <div class="opisanie">
                                     <img src="image/books/<?= $item->image ?>" alt="" class="books-img">
                                     <p class="opisanie-p"><?= $item->name ?></p>
@@ -110,7 +107,7 @@ $form = ActiveForm::begin([
     flex-wrap: wrap;">
                     <?php foreach($author as $item): ?>
                         <div class="books_disp">
-                            <a href="<?=Url::toRoute(['site/author', 'id' => $item->id, 'books_id'=>$item->id]);?>" class="books-a">
+                            <a href="<?=Url::toRoute(['site/author', 'id' => $item->id]);?>" class="books-a">
                                 <div class="opisanie">
                                     <img src="image/author/<?= $item->image ?>" alt="" class="books-img">
                                     <p class="opisanie-p"><?= $item->nsp ?></p>
@@ -132,7 +129,7 @@ $form = ActiveForm::begin([
     flex-wrap: wrap;">
                     <?php foreach($books as $item): ?>
                         <div class="books_disp">
-                            <a href="<?=Url::toRoute(['site/books', 'id' => $item->id, 'books_id'=>$item->id]);?>" class="books-a">
+                            <a href="<?=Url::toRoute(['site/books', 'id' => $item->id]);?>" class="books-a">
                                 <div class="opisanie">
                                     <img src="image/books/<?= $item->image ?>" alt="" class="books-img">
                                     <p class="opisanie-p"><?= $item->name ?></p>

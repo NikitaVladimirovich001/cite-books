@@ -7,6 +7,7 @@ use app\models\CategorySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * CategoryController implements the CRUD actions for Category model.
@@ -70,8 +71,11 @@ class CategoryController extends Controller
         $model = new Category();
 
         if ($this->request->isPost) {
+            $model->image = UploadedFile::getInstance($model, 'image'); // Загружаем изображение из запроса
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                if ($model->upload()) { // Вызываем метод upload() для сохранения изображения
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -81,6 +85,7 @@ class CategoryController extends Controller
             'model' => $model,
         ]);
     }
+
 
     /**
      * Updates an existing Category model.
@@ -94,7 +99,10 @@ class CategoryController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $model->image = UploadedFile::getInstance($model, 'image'); // Загружаем изображение из запроса
+            if ($model->upload()) { // Вызываем метод upload() для сохранения изображения
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [

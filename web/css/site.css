@@ -1,3 +1,4 @@
+
 body {
     margin: 0;
     padding: 0;
@@ -178,15 +179,29 @@ a {
 }
 
 /* Главное */
-
 .fon {
     position: absolute;
     width: 100%;
     height: 546px;
     z-index: -1;
-    top: 0px;
+    top: 0;
     object-fit: cover;
 }
+
+/*.dark_fon {*/
+/*    position: absolute;*/
+/*    width: 100%;*/
+/*    height: 546px;*/
+/*    z-index: -1;*/
+/*    top: 0;*/
+/*    object-fit: cover;*/
+/*    !*background-size: cover;*!*/
+/*    !*background-image: url('../image/genres/horror.png');*!*/
+/*}*/
+
+/*.bel_fon {*/
+/*    display: none;*/
+/*}*/
 
 .button-slider {
     margin-top: 57px;
@@ -843,6 +858,39 @@ aside ul li:hover, aside ul a:hover {
 /* изображение поиска */
 .search {
     width: 21px ;
+}
+
+
+/* Слайдер */
+.books-reading-content-wrap {
+    height: 800px;
+    overflow: hidden;
+    position: relative;
+}
+
+.books-reading-slider {
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.books-reading-inner {
+    display: flex;
+    flex-direction: column;
+}
+
+.books-reading {
+    margin: 0;
+    padding: 10px;
+}
+
+.books-reading-slider::-webkit-scrollbar {
+    width: 5px;
+}
+
+.books-reading-slider::-webkit-scrollbar-thumb {
+    background-color: #888;
 }
 
 

@@ -19,7 +19,7 @@ $this->title = 'Категории';
         <!--    Книги    -->
         <div class="brt">
             <div class="zag">
-                <h3>Новинки</h3>
+                <h3><?= $category['name'] ?></h3>
                 <img src="image/srelka-zag.png" alt="" class="books-strelka">
             </div>
 
@@ -27,7 +27,7 @@ $this->title = 'Категории';
     flex-wrap: wrap;">
                 <?php foreach($books as $book): ?>
                     <div class="books_disp">
-                        <a href="<?=Url::toRoute(['site/books', 'id' => $book['id'], 'books_id'=>$book['id']]);?>" class="books-a">
+                        <a href="<?=Url::toRoute(['site/books', 'id' => $book['id']]);?>" class="books-a">
                             <div class="opisanie">
                                 <img src="../image/books/<?= $book['image'] ?>" alt="" class="books-img">
                                 <p class="opisanie-p"><?= $book['name'] ?></p>
