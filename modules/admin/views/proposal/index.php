@@ -15,46 +15,52 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="proposal-index">
 
-        <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-        <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
-            'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
 
-                'id',
-                'body:ntext',
-                'user_id',
-                'image',
-                'soob',
-                [
-                    'attribute'=>'Администрирование',
-                    'format'=>'html',
-                    'value'=>function($data){
-                        switch ($data->status){
-                            case 1:
-                                return Html::a('Принято', 'good/?id='.$data->id)."|".
-                                    Html::a('Ожидание', 'verybad/?id='.$data->id);
-
-                            case 2:
-                                return  Html::a('Ожидание', 'verybad/?id='.$data->id);
-                        }
-                    }
-                ],
-                [
-                    'class' => ActionColumn::className(),
-                    'urlCreator' => function ($action, Proposal $model, $key, $index, $column) {
-                        return Url::toRoute([$action, 'id' => $model->id]);
-                    }
-                ],
+            'id',
+            'body:ntext',
+            [
+                'attribute' => 'user_id',
+                'label' => 'Пользователь',
+                'value' => function ($model) {
+                    return $model->user->username; // Предполагается, что у вас есть атрибут 'username' в модели User
+                },
             ],
-        ]); ?>
-<!---->
-<!--        <p>-->
-<!--            --><?//= Html::a(Yii::t('app', 'Создать обращение'), ['create'], ['class' => 'btn btn-success']) ?>
-<!--        </p>-->
+            'image',
+            'soob',
+            [
+                'attribute' => 'Администрирование',
+                'format' => 'html',
+                'value' => function ($data) {
+                    switch ($data->status) {
+                        case 1:
+                            return Html::a('Принято', 'good/?id=' . $data->id) . "|" .
+                                Html::a('Ожидание', 'verybad/?id=' . $data->id);
+
+                        case 2:
+                            return Html::a('Ожидание', 'verybad/?id=' . $data->id);
+                    }
+                },
+            ],
+            [
+                'class' => ActionColumn::className(),
+                'urlCreator' => function ($action, Proposal $model, $key, $index, $column) {
+                    return Url::toRoute([$action, 'id' => $model->id]);
+                }
+            ],
+        ],
+    ]); ?>
+
+    <!--
+    <p>
+        <?= Html::a(Yii::t('app', 'Создать обращение'), ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
+    -->
 
 </div>
-
-

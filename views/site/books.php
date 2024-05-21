@@ -152,9 +152,9 @@ $this->title = 'Книга';
     </div>
     <!--  Комментарий  -->
     <br>
-    <center style="    margin-left: -109px;"><h3 style="color: #F25900">Я думаю о книге...</h3></center>
+    <center style="margin-left: -109px;"><h3 style="color: #F25900">Я думаю о книге...</h3></center>
     <br>
-    <?php foreach ($comments as $item):?>
+    <?php foreach ($comments as $item): ?>
         <div class="card" style="margin-top: 15px">
             <div class="card-body">
                 <div class="d-flex flex-start align-items-center">
@@ -162,14 +162,14 @@ $this->title = 'Книга';
                          src="../image/avatar.jpg" alt="avatar" width="60"
                          height="60" />
                     <div>
-                        <h6 style="color: black"><?= $item->user->username ?></h6>
+                        <h6 style="color: black"><?= Html::encode($item->user->username) ?></h6>
                         <p class="text-muted small mb-0">
-                            <?= $item->created_at ?>
+                            <?= Html::encode($item->created_at) ?>
                         </p>
                     </div>
                 </div>
 
-                <p class="mt-3 mb-4 pb-2" style="color: black"><?= $item->body ?></p>
+                <p class="mt-3 mb-4 pb-2" style="color: black"><?= Html::encode($item->body) ?></p>
 
                 <div class="small d-flex justify-content-start">
                     <a href="#!" class="d-flex align-items-center me-3">
@@ -187,16 +187,17 @@ $this->title = 'Книга';
                 </div>
             </div>
         </div>
-    <?php endforeach;?>
+    <?php endforeach; ?>
 
     <?php if (!Yii::$app->user->isGuest): ?>
         <div class="" style="padding: 20px">
             <!--Форма отправки комментариев-->
-            <?php $form = ActiveForm::begin(['id'=> 'contact-form']); ?>
+            <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
             <div class="form-group">
                 <div class="col-md-12">
-                    <?php $model = new \app\models\Comment();
-                    echo $form->field($model, 'body', ['labelOptions' => ['class' => 'label_my']])->textArea(['class' => 'my-input-class']) ?>
+                    <?php
+                    echo $form->field($model, 'body', ['labelOptions' => ['class' => 'label_my']])->textArea(['class' => 'my-input-class']);
+                    ?>
                     <button class="redeng">Отправить</button>
                 </div>
             </div>

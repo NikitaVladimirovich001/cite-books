@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "comment".
@@ -38,8 +39,8 @@ class Comment extends \yii\db\ActiveRecord
             [['created_at'], 'safe'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['books_id'], 'exist', 'skipOnError' => true, 'targetClass' => Books::class, 'targetAttribute' => ['books_id' => 'id']],
-            ['user_id', 'default', 'value'=>Yii::$app->user->getId()],
-            ['books_id', 'default', 'value' => $_GET['id']],
+            ['user_id', 'default', 'value' => Yii::$app->user->getId()],
+            ['books_id', 'default', 'value' => Yii::$app->request->get('id')],
         ];
     }
 
@@ -50,9 +51,9 @@ class Comment extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ИД'),
-            'body' => Yii::t('app', 'Введиет текст'),
+            'body' => Yii::t('app', 'Введите текст'),
             'created_at' => Yii::t('app', 'Дата создания'),
-            'user_id' => Yii::t('app', 'Ид пользователя'),
+            'user_id' => Yii::t('app', 'ИД пользователя'),
             'books_id' => Yii::t('app', 'ИД книги'),
         ];
     }
@@ -74,17 +75,18 @@ class Comment extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
-
-
+    /**
+     * Сохраняет комментарий с экранированием ввода.
+     */
     public function saveComment()
     {
         $comment = new Comment();
         $id = Yii::$app->request->get('id');
         $books = Books::findOne($id);
-        $comment->body = $this->body;
+        $comment->body = Html::encode($this->body);  // Экранирование ввода
 
         $comment->link('books', $books);
         $comment->save();

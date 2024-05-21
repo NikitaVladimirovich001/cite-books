@@ -10,7 +10,7 @@ $this->title = 'Авторы';
         <div class="brt">
             <div class="zag">
                 <h3>Книги</h3>
-                <img src="../image/srelka-zag.png" alt="" class="books-strelka">
+<!--                <img src="../image/srelka-zag.png" alt="" class="books-strelka">-->
             </div>
 
             <div class="books-container-book" style="    display: flex;

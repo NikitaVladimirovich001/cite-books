@@ -1,7 +1,5 @@
-// Смена темы
-
 let lightTheme = "css/light.css";
-let darkTheme = 'css/site.css'
+let darkTheme = 'css/site.css';
 let lightImage = "image/bel_fon.jpg";
 let darkImage = "image/genres/horror.png";
 
@@ -34,23 +32,26 @@ function changeTheme(commit=true) {
 function setImage(theme) {
     let image = document.getElementById('background');
 
-    // Получаем сохраненное изображение из локального хранилища
-    let savedImage = localStorage.getItem("image");
+    // Проверяем, существует ли элемент изображения
+    if (image) {
+        // Получаем сохраненное изображение из локального хранилища
+        let savedImage = localStorage.getItem("image");
 
-    // Если изображение сохранено, устанавливаем его
-    if (savedImage) {
-        image.setAttribute('src', savedImage);
-    } else {
-        // Если изображение не сохранено, устанавливаем изображение в зависимости от текущей темы
-        if (isLightTheme(theme)) {
-            image.setAttribute('src', lightImage);
+        // Если изображение сохранено, устанавливаем его
+        if (savedImage) {
+            image.setAttribute('src', savedImage);
         } else {
-            image.setAttribute('src', darkImage);
+            // Если изображение не сохранено, устанавливаем изображение в зависимости от текущей темы
+            if (isLightTheme(theme)) {
+                image.setAttribute('src', lightImage);
+            } else {
+                image.setAttribute('src', darkImage);
+            }
         }
     }
 }
-//
-// Проверяю, есть ли 'theme' в локальном хранилище
+
+// Проверяем, есть ли 'theme' в локальном хранилище
 let savedTheme = localStorage.getItem("theme");
 
 // Если есть, применяем это значение, иначе по умолчанию используем светлую тему
@@ -63,42 +64,45 @@ if (savedTheme) {
 document.addEventListener("DOMContentLoaded", function () {
     setImage(document.getElementById("theme"));
     let switchMode = document.getElementById("switchMode");
-    switchMode.onclick = function () {
-        changeTheme();
-    };
 
+    // Проверяем, существует ли элемент switchMode
+    if (switchMode) {
+        switchMode.onclick = function () {
+            changeTheme();
+        };
+    }
 
-// кнопка для отоброжение и удаления модального окна для смены темы
-
+    // Модальное окно и его кнопки
     const modal = document.getElementById("modal");
     const btn_menu = document.getElementById("btn_menu");
+    let isCursorOnModal = false;
 
-    let isModalOpened = false;
-
-    function openModal() {
-        modal.style.display = "flex";
-        isModalOpened = true;
-    }
-
-    function closeModal() {
-        if (!isCursorOnModal) {
-            modal.style.display = "none";
-            isModalOpened = false;
+    // Проверяем, существуют ли элементы modal и btn_menu
+    if (modal && btn_menu) {
+        function openModal() {
+            modal.style.display = "flex";
+            isCursorOnModal = true;
         }
+
+        function closeModal() {
+            if (!isCursorOnModal) {
+                modal.style.display = "none";
+                isCursorOnModal = false;
+            }
+        }
+
+        btn_menu.addEventListener('mouseover', openModal);
+        btn_menu.addEventListener('mouseout', function() {
+            setTimeout(closeModal, 300); // Добавляем небольшую задержку перед закрытием модального окна
+        });
+
+        modal.addEventListener('mouseover', function() {
+            isCursorOnModal = true;
+        });
+
+        modal.addEventListener('mouseout', function() {
+            isCursorOnModal = false;
+            setTimeout(closeModal, 300); // Добавляем небольшую задержку перед закрытием модального окна
+        });
     }
-
-    btn_menu.addEventListener('mouseover', openModal);
-    btn_menu.addEventListener('mouseout', function() {
-        setTimeout(closeModal, 300); // Добавляем небольшую задержку перед закрытием модального окна
-    });
-
-    modal.addEventListener('mouseover', function() {
-        isCursorOnModal = true;
-    });
-
-    modal.addEventListener('mouseout', function() {
-        isCursorOnModal = false;
-        setTimeout(closeModal, 300); // Добавляем небольшую задержку перед закрытием модального окна
-    });
-
 });

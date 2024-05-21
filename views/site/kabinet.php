@@ -32,7 +32,7 @@ $this->title = 'Кабинет';
             <?php if (empty($proposal)): ?>
             <div class="card" style="width: 838px; margin-top: 30px">
                 <div class="card-body">
-                    <h6 style="color: black">У вас небыло обращений!</h6>
+                    <h6 style="color: black">У вас не было обращений!</h6>
                 </div>
             </div>
             <?php else: ?>

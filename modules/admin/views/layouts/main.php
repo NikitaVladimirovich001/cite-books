@@ -22,7 +22,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <?php $this->beginPage() ?>
 <?php if(Yii::$app->user->isGuest or !Yii::$app->user->identity->is_admin)
     {
-        return Yii::$app->response->redirect('/site/index');
+        return Yii::$app->response->redirect('/');
     }
 ?>
 <!DOCTYPE html>

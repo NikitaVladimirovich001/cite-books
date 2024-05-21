@@ -18,6 +18,7 @@ use app\models\User;
 use Yii;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
+use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -349,20 +350,36 @@ class SiteController extends Controller
      * @return Response|string
      */
 
-    //    Отправка заявки
+// Отправка заявок
     public function actionProposal()
     {
         $model = new Proposal();
-        if ($model->load(Yii::$app->request->post()) && $model->save()){
-            Yii::$app->session->setFlash('success', 'Отправлено');
+        if ($model->load(Yii::$app->request->post())) {
             $model->image = UploadedFile::getInstance($model, 'image');
-            if ($model->upload()){
-                $model->save();
-                return $this->refresh();
-            }
+            $model->body = Html::encode($model->body);  // Кодируем содержимое поля body
 
+            if ($model->image && $model->image->size < 22016) {
+                if ($model->upload()) {
+                    if ($model->save()) {
+                        Yii::$app->session->setFlash('success', 'Отправлено');
+                    } else {
+                        Yii::$app->session->setFlash('danger', 'Ошибка при сохранении данных');
+                    }
+                } else {
+                    Yii::$app->session->setFlash('danger', 'Ошибка при загрузке файла');
+                }
+            } elseif (!$model->image) {
+                if ($model->save()) {
+                    Yii::$app->session->setFlash('success', 'Отправлено');
+                } else {
+                    Yii::$app->session->setFlash('danger', 'Ошибка при сохранении данных');
+                }
+            } else {
+                Yii::$app->session->setFlash('danger', 'Файл слишком большой');
+            }
             return $this->refresh();
         }
+
         return $this->render('proposal', [
             'model' => $model,
         ]);
@@ -379,13 +396,19 @@ class SiteController extends Controller
         return $this->render('kabinet', ['proposal' => $proposal, 'user'=>$user]);
     }
 
-//    Поиск книги
+// Поиск книги
     public function actionSearch()
     {
         $searchModel = new \app\models\SearchModel(); // Создаем экземпляр модели поиска
 
         // Проверяем, был ли отправлен запрос поиска
         if ($searchModel->load(Yii::$app->request->get())) {
+            // Проверяем, что запрос не пустой
+            if (empty(trim($searchModel->query))) {
+                // Если запрос пустой, перенаправляем пользователя на главную страницу
+                return $this->redirect(Yii::$app->homeUrl);
+            }
+
             // Разбиваем запрос пользователя на отдельные слова
             $keywords = explode(' ', strtolower($searchModel->query));
 
@@ -418,11 +441,8 @@ class SiteController extends Controller
             }
         }
 
-        // Если книга не найдена, показываем сообщение об ошибке
-        Yii::$app->session->setFlash('error', 'Книга не найдена.');
-
-        // Перенаправляем пользователя на предыдущую страницу (на главную)
-        return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
+        // Если книга не найдена, перенаправляем пользователя на главную страницу
+        return $this->redirect(Yii::$app->homeUrl);
     }
 
     public function actionAbout()

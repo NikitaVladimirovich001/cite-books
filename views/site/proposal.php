@@ -25,19 +25,16 @@ $this->title = 'Заявка';
             ],
         ]); ?>
 
-        <p>Обращение от пользователя: <?= Yii::$app->user->identity->username ?></p>
+        <p>Обращение от пользователя: <?= Html::encode(Yii::$app->user->identity->username) ?></p>
 
-        <?= $form->field($model, 'body', ['template' => '<label class="col-lg-1 col-form-label mr-lg-3" style="color: white;">{label}</label>{input}{hint}{error}',
-            ])->textarea(['rows' => 6]) ?>
+        <?= $form->field($model, 'body', ['labelOptions' => ['class' => 'label_my']])->textarea(['rows' => 6, ['class' => 'my-input-class']]) ?>
 
-        <?= $form->field($model, 'image', ['template' => '<label class="col-lg-1 col-form-label mr-lg-3" style="color: white;">{label}</label>{input}{hint}{error}',
-        ])->fileInput() ?>
+        <?= $form->field($model, 'image', ['labelOptions' => ['class' => 'label_my']])->fileInput(['class' => 'my-input-class']) ?>
 
         <div class="form-group">
-            <?= Html::submitButton('Отправить', ['class' => 'redeng', 'name' => 'login-button', 'style'=>'margin-left: 8;']) ?>
+            <?= Html::submitButton('Отправить', ['class' => 'redeng', 'name' => 'login-button', 'style' => 'margin-left: 8;']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>
     </div>
 </div>
-

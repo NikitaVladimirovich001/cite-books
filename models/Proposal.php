@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "proposal".
@@ -36,7 +37,7 @@ class Proposal extends \yii\db\ActiveRecord
             [['soob'], 'string'],
             [['status'], 'string'],
             ['user_id', 'default', 'value' => Yii::$app->user->getId()],
-            [['image'], 'file', 'extensions' => 'png,jpg', 'on'=>'update'],
+            [['image'], 'file', 'extensions' => 'png,jpg', 'on' => 'update'],
         ];
     }
 
@@ -65,7 +66,11 @@ class Proposal extends \yii\db\ActiveRecord
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
-
+    /**
+     * Handle file upload
+     *
+     * @return bool
+     */
     public function upload()
     {
         if ($this->image !== null && $this->validate()) {
@@ -76,6 +81,11 @@ class Proposal extends \yii\db\ActiveRecord
         }
     }
 
+    /**
+     * Get status description
+     *
+     * @return string
+     */
     public function getStatus()
     {
         switch ($this->status) {
@@ -83,18 +93,30 @@ class Proposal extends \yii\db\ActiveRecord
                 return 'Ожидание';
             case 2:
                 return 'Принято';
+            default:
+                return 'Неизвестный статус';
         }
     }
 
+    /**
+     * Set proposal as accepted
+     *
+     * @return bool
+     */
     public function good()
     {
-        $this->status=2;
+        $this->status = 2;
         return $this->save(false);
     }
 
+    /**
+     * Set proposal as pending
+     *
+     * @return bool
+     */
     public function verybad()
     {
-        $this->status=1;
+        $this->status = 1;
         return $this->save(false);
     }
 }
