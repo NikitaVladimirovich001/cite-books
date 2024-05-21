@@ -15,10 +15,8 @@ class Author extends \yii\db\ActiveRecord
     {
         return [
             [['nsp', 'image'], 'required'],
-//            [['books_id'], 'integer'],
             ['nsp', 'string', 'max' => 256],
             ['image', 'file'],
-//            [['books_id'], 'exist', 'skipOnError' => true, 'targetClass' => Books::class, 'targetAttribute' => ['books_id' => 'id']],
         ];
     }
 

@@ -38,12 +38,12 @@ class Books extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-//            [['name', 'opisanie', 'file', 'image', 'author_id', 'category_id'], 'required'],
-            [['opisanie'], 'string'],
+            [['name', 'opisanie', 'image', 'file', 'author_id', 'category_id'], 'required'],
+            ['opisanie', 'string'],
             [['author_id', 'category_id'], 'integer'],
             ['name', 'string', 'max' => 256],
-            [['image'], 'file', 'extensions' => 'png, jpg', 'on'=>'update'],
-            [['file'], 'file', 'on'=>'update'],
+            ['image', 'file', 'extensions' => 'png, jpg', 'on'=>'update'],
+            ['file', 'file', 'extensions' => 'text', 'on'=>'update'],
             [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => Author::class, 'targetAttribute' => ['author_id' => 'id']],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['category_id' => 'id']],
         ];
@@ -56,13 +56,13 @@ class Books extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ИД'),
-            'name' => Yii::t('app', 'Имя'),
+            'name' => Yii::t('app', 'Название'),
             'opisanie' => Yii::t('app', 'Описание'),
-            'file' => Yii::t('app', 'Файл'),
-            'image' => Yii::t('app', 'Картинка'),
+            'file' => Yii::t('app', 'Файл с книгой'),
+            'image' => Yii::t('app', 'Обложка'),
             'date' => Yii::t('app', 'Дата'),
-            'author_id' => Yii::t('app', 'ИД автор'),
-            'category_id' => Yii::t('app', 'ИД категории'),
+            'author_id' => Yii::t('app', 'Автор'),
+            'category_id' => Yii::t('app', 'Катигория'),
             'viewed' => Yii::t('app', 'Просмотры'),
         ];
     }

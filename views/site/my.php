@@ -2,8 +2,6 @@
 
 /** @var yii\web\View $this */
 
-use yii\bootstrap5\ActiveForm;
-use yii\helpers\Html;
 use yii\helpers\Url;
 
 $this->title = 'Мое';
@@ -17,7 +15,6 @@ $this->title = 'Мое';
             <div class="zag">
                 <h3>Избранное</h3>
             </div>
-
             <div class="books-container-book" style="    display: flex;
     flex-wrap: wrap;">
                 <?php if (empty($favoriteBooks)): ?>

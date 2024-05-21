@@ -25,7 +25,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 'id',
                 'nsp',
-                'image',
+                [
+                    'attribute' => 'image',
+                    'format' => 'html',
+                    'value' => function ($model) {
+                        return Html::img(Yii::$app->request->BaseUrl . '/image/author/' . $model->image, ['width' => '100']);
+                    },
+                ],
 //                'books_id',
                 [
                     'class' => ActionColumn::className(),

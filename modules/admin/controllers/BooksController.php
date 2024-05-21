@@ -72,14 +72,26 @@ class BooksController extends Controller
         $model = new Books();
 
         if ($this->request->isPost) {
+            $model->load($this->request->post());
+
+            // Получаем экземпляры загруженных файлов
             $model->image = UploadedFile::getInstance($model, 'image');
-            $model->file = UploadedFile::getInstance($model, 'file'); // Получаем экземпляр загруженного файла
-            if ($model->load($this->request->post()) && $model->save()) {
-                if ($model->file) {
-                    $model->file->saveAs('file/' . $model->file->baseName . '.' . $model->file->extension); // Сохраняем файл
-                    $model->image->saveAs('image/books/' . $model->image->baseName . '.' . $model->image->extension); // Сохраняем изображение
+            $model->file = UploadedFile::getInstance($model, 'file');
+
+            if ($model->validate()) {
+                // Если изображение было загружено, сохраняем его
+                if ($model->image) {
+                    $model->uploadImage();
                 }
-                return $this->redirect(['view', 'id' => $model->id]);
+                // Если файл был загружен, сохраняем его
+                if ($model->file) {
+                    $model->upload();
+                }
+
+                // Сохраняем книгу
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -101,21 +113,33 @@ class BooksController extends Controller
     {
         $model = $this->findModel($id);
 
-        // Получаем экземпляр загруженного файла
-        $model->file = UploadedFile::getInstance($model, 'file');
+        // Получаем экземпляры загруженных файлов
         $model->image = UploadedFile::getInstance($model, 'image');
+        $model->file = UploadedFile::getInstance($model, 'file');
 
         if ($this->request->isPost) {
+            // Загрузка данных из формы в модель
             if ($model->load($this->request->post())) {
-                if ($model->file) {
-                    $model->upload(); // Вызываем метод upload() модели для сохранения файла
-                    $model->uploadImage();
-                    $model->save();
+                // Проверка валидности модели
+                if ($model->validate()) {
+                    // Если изображение было загружено, сохраняем его
+                    if ($model->image) {
+                        $model->uploadImage();
+                    }
+                    // Если файл был загружен, сохраняем его
+                    if ($model->file) {
+                        $model->upload();
+                    }
+
+                    // Сохраняем модель книги
+                    if ($model->save()) {
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
                 }
-                return $this->redirect(['view', 'id' => $model->id]);
             }
         }
 
+        // Отображение формы обновления существующей книги
         return $this->render('update', [
             'model' => $model,
         ]);

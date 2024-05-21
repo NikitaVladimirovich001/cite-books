@@ -2,11 +2,11 @@
 
 /** @var yii\web\View $this */
 
-use yii\helpers\Html;
 use yii\helpers\Url;
 
 $this->title = 'Категории';
 ?>
+
 <div class="category-container-glav">
     <?php foreach($categories as $category): ?>
         <a href="<?=Url::toRoute(['site/mycategory', 'id' => $category['id']]);?>" class="">

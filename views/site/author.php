@@ -10,7 +10,6 @@ $this->title = 'Авторы';
         <div class="brt">
             <div class="zag">
                 <h3>Книги</h3>
-<!--                <img src="../image/srelka-zag.png" alt="" class="books-strelka">-->
             </div>
 
             <div class="books-container-book" style="    display: flex;
@@ -21,7 +20,6 @@ $this->title = 'Авторы';
                             <div class="opisanie">
                                 <img src="../image/books/<?= $item['image'] ?>" alt="" class="books-img">
                                 <p class="opisanie-p"><?= $item['name'] ?></p>
-<!--                                <p class="opisanie-author">--><?//= $item->author->nsp ?><!--</p>-->
                             </div>
                         </a>
                     </div>

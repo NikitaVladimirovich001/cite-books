@@ -1,6 +1,5 @@
 <?php
 
-use yii\bootstrap5\Html;
 use yii\bootstrap5\LinkPager;
 use yii\helpers\Url;
 
@@ -21,12 +20,8 @@ $form = ActiveForm::begin([
 <?php ActiveForm::end(); ?>
 
 <img src="" id='background' alt="" class="fon">
-<!--<img class="fon">-->
-<!--<img src="../image/bel_fon.jpg" alt="" class="bel_fon">-->
-<!--<img src="../image/genres/horror.png" alt="" class="dark_fon">-->
 
-
-<!--  Категории  -->
+<!--  Стартовая страница  -->
 <div class="slider">
     <div class="slider-block-text-p">
         <p class="slider-p">Откройте мир захватывающих приключений и увлекательных историй с нашей коллекцией книг. Разнообразие жанров которые касаются сердец и вдохновляют.</p>

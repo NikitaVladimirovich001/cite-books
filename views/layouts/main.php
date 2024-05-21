@@ -156,7 +156,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         </div>
         <hr class="footer-hr">
         <div class="f">
-            <p class="footer-p">© 2023 КнигаТут. 18+</p>
+            <p class="footer-p">© 2023 КнигаТут.</p>
             <p class="footer-p">Проект разработан Лапиным Никитой В.</p>
         </div>
     </footer>
@@ -169,7 +169,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         </div>
         <hr class="footer-hr">
         <div class="f">
-            <p class="footer-p">© 2024 КнигаТут. 18+</p>
+            <p class="footer-p">© 2024 КнигаТут.</p>
             <p class="footer-p">Проект разработан Лапиным Никитой В.</p>
         </div>
     </footer>

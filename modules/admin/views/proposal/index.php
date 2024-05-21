@@ -29,10 +29,26 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'user_id',
                 'label' => 'Пользователь',
                 'value' => function ($model) {
-                    return $model->user->username; // Предполагается, что у вас есть атрибут 'username' в модели User
+                    return $model->user->username;
                 },
             ],
-            'image',
+            [
+                'attribute' => 'image',
+                'format' => 'html',
+                'label' => 'Изображение',
+                'value' => function ($model) {
+                    $imagePath = Yii::getAlias('@web/image/uploads/' . $model->image);
+                    $imageFilePath = Yii::getAlias('@webroot/image/uploads/' . $model->image);
+                    if (!empty($model->image) && file_exists($imageFilePath)) {
+                        return Html::img($imagePath, [
+                            'alt' => 'Image',
+                            'width' => '70px'
+                        ]);
+                    } else {
+                        return 'Нет изображения';
+                    }
+                },
+            ],
             'soob',
             [
                 'attribute' => 'Администрирование',

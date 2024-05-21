@@ -9,6 +9,7 @@ use yii\bootstrap5\Html;
 
 $this->title = 'Авторизация';
 ?>
+
 <div class="site-login" style="width: 100%;
     height: 73vh;
     display: flex;
@@ -31,8 +32,6 @@ $this->title = 'Авторизация';
         <?= $form->field($model, 'username', ['labelOptions' => ['class' => 'label_my']])->textInput(['autofocus' => true, 'class' => 'my-input-class']) ?>
 
         <?= $form->field($model, 'password', ['labelOptions' => ['class' => 'label_my']])->passwordInput(['class' => 'my-input-class']) ?>
-
-<!--        <p>Введите данные своей учетной записи</p>-->
 
         <div class="form-group">
             <div class="offset-lg-1 col-lg-11">

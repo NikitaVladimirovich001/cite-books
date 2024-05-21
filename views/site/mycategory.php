@@ -2,25 +2,17 @@
 
 /** @var yii\web\View $this */
 
-use yii\helpers\Html;
-
-$this->title = 'Категории';
-?>
-<?php
-
-/** @var yii\web\View $this */
-
 use yii\helpers\Url;
 
 $this->title = 'Категории';
 ?>
+
 <div class="books-glav">
     <div class="container-books">
         <!--    Книги    -->
         <div class="brt">
             <div class="zag">
                 <h3><?= $category['name'] ?></h3>
-                <img src="image/srelka-zag.png" alt="" class="books-strelka">
             </div>
 
             <div class="books-container-book" style="    display: flex;

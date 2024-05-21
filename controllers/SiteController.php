@@ -5,15 +5,11 @@ namespace app\controllers;
 use app\models\Author;
 use app\models\Books;
 use app\models\Category;
-use app\models\Circle;
 use app\models\Comment;
 use app\models\Favorites;
 use app\models\History;
 use app\models\Proposal;
 use app\models\RegisterForm;
-use app\models\Schedule;
-use app\models\SearchModel;
-use app\models\Society;
 use app\models\User;
 use Yii;
 use yii\data\Pagination;
@@ -21,11 +17,9 @@ use yii\filters\AccessControl;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
-use app\models\ContactForm;
 use yii\web\UploadedFile;
 
 class SiteController extends Controller
@@ -79,7 +73,7 @@ class SiteController extends Controller
      * @return Response|string
      */
 
-//    Авторизация
+    //    Авторизация
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
@@ -102,7 +96,7 @@ class SiteController extends Controller
         ]);
     }
 
-//    Регистрация
+    //    Регистрация
     public function actionRegister()
     {
         if (!Yii::$app->user->isGuest) {
@@ -126,7 +120,7 @@ class SiteController extends Controller
      * @return Response
      */
 
-//    Выход из ссесии
+    //    Выход из ссесии
     public function actionLogout()
     {
         Yii::$app->user->logout();
@@ -141,7 +135,7 @@ class SiteController extends Controller
      * @return string
      */
 
-//    Вывод на главной странице отфильтрованных и обычных книг с пагинацией
+    //    Вывод на главной странице отфильтрованных и обычных книг с пагинацией
     public function actionIndex()
     {
         $searchModel = new \app\models\SearchModel();
@@ -162,7 +156,7 @@ class SiteController extends Controller
         return $this->render('index', ['categories'=>$categories, 'populars'=>$populars, 'books'=>$books, 'new'=>$new, 'author'=>$author, 'pages'=>$pages, 'searchModel'=>$searchModel]);
     }
 
-//    Нахождение рандомной книги
+    //    Нахождение рандомной книги
     public function actionRandomBook()
     {
         // Получаем случайный ID книги из базы данных
@@ -179,7 +173,7 @@ class SiteController extends Controller
         }
     }
 
-//    Подробная информация о кнги, создание комментария, вывод текста из кнги, добавление в истрорию
+    //    Подробная информация о кнги, создание комментария, вывод текста из кнги, добавление в истрорию
     public function actionBooks($id)
     {
         $books = Books::findOne($id);
@@ -235,7 +229,7 @@ class SiteController extends Controller
     }
 
 
-//    Добавить в избранное
+    //    Добавить в избранное
     public function actionAddToFavorite($id)
     {
         $user_id = Yii::$app->user->id;
@@ -272,7 +266,7 @@ class SiteController extends Controller
         return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
     }
 
-//    Вывод истории и избранного
+    //    Вывод истории и избранного
     public function actionMy()
     {
         // Получите обновленную историю просмотра пользователя, отсортированную по времени создания в обратном порядке
@@ -291,7 +285,7 @@ class SiteController extends Controller
         return $this->render('my', ['userHistory' => $userHistory, 'favoriteBooks' => $favoriteBooks,]);
     }
 
-//    Книги по авторам
+    //    Книги по авторам
     public function actionAuthor()
     {
         if (isset($_GET['id']) && $_GET['id']!='')
@@ -350,7 +344,7 @@ class SiteController extends Controller
      * @return Response|string
      */
 
-// Отправка заявок
+    // Отправка заявок
     public function actionProposal()
     {
         $model = new Proposal();
@@ -396,7 +390,7 @@ class SiteController extends Controller
         return $this->render('kabinet', ['proposal' => $proposal, 'user'=>$user]);
     }
 
-// Поиск книги
+    // Поиск книги
     public function actionSearch()
     {
         $searchModel = new \app\models\SearchModel(); // Создаем экземпляр модели поиска

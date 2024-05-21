@@ -71,9 +71,19 @@ class CategoryController extends Controller
         $model = new Category();
 
         if ($this->request->isPost) {
-            $model->image = UploadedFile::getInstance($model, 'image'); // Загружаем изображение из запроса
-            if ($model->load($this->request->post()) && $model->save()) {
-                if ($model->upload()) { // Вызываем метод upload() для сохранения изображения
+            $model->load($this->request->post());
+
+            // Получаем экземпляр загруженного изображения
+            $model->image = UploadedFile::getInstance($model, 'image');
+
+            if ($model->validate()) {
+                // Если изображение было загружено, сохраняем его
+                if ($model->image) {
+                    $model->upload();
+                }
+
+                // Сохраняем категорию
+                if ($model->save()) {
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             }
@@ -86,7 +96,6 @@ class CategoryController extends Controller
         ]);
     }
 
-
     /**
      * Updates an existing Category model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -98,13 +107,28 @@ class CategoryController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            $model->image = UploadedFile::getInstance($model, 'image'); // Загружаем изображение из запроса
-            if ($model->upload()) { // Вызываем метод upload() для сохранения изображения
-                return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost) {
+            // Загрузка данных из формы в модель
+            if ($model->load($this->request->post())) {
+                // Получение экземпляра загруженного изображения
+                $model->image = UploadedFile::getInstance($model, 'image');
+
+                // Проверка валидности модели и загрузка изображения
+                if ($model->validate()) {
+                    // Если изображение было загружено, сохраняем его
+                    if ($model->image) {
+                        $model->upload();
+                    }
+
+                    // Сохраняем модель категории
+                    if ($model->save()) {
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                }
             }
         }
 
+        // Отображение формы обновления существующей категории
         return $this->render('update', [
             'model' => $model,
         ]);

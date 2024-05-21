@@ -1,14 +1,12 @@
 <?php
 
-
 /** @var yii\web\View $this */
 
-use app\models\Favorites;
-use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
 
 $this->title = 'Кабинет';
 ?>
+
 <body>
     <div class="books-glav" style="padding-bottom: 40px;">
         <div class="container-user-glav">
@@ -44,7 +42,7 @@ $this->title = 'Кабинет';
                             <img src="../image/uploads/<?= $item->image ?>" alt="" class="img-proposal">
                              <p class="created_at-user">Статус: <?php echo $item->getStatus() ?></p>
                              <?php if($item->soob):?>
-                                 <p class="proposal-text-p">Админестратор: <?php echo $item->soob ?></p>
+                                 <p class="proposal-text-p">Администратор  : <?php echo $item->soob ?></p>
                              <?php else: ?>
 
                              <?php endif; ?>

@@ -33,9 +33,7 @@ class Proposal extends \yii\db\ActiveRecord
     {
         return [
             [['body'], 'required'],
-            [['body'], 'string'],
-            [['soob'], 'string'],
-            [['status'], 'string'],
+            [['body', 'soob', 'status'], 'string'],
             ['user_id', 'default', 'value' => Yii::$app->user->getId()],
             [['image'], 'file', 'extensions' => 'png,jpg', 'on' => 'update'],
         ];
@@ -48,9 +46,9 @@ class Proposal extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ИД'),
-            'image' => Yii::t('app', 'Изображения'),
-            'body' => Yii::t('app', 'Введите текст'),
-            'user_id' => Yii::t('app', 'Ид пользователя'),
+            'image' => Yii::t('app', 'Изображения с ошибкой'),
+            'body' => Yii::t('app', 'Сообщить об ошибке'),
+            'user_id' => Yii::t('app', 'Пользователь'),
             'status' => Yii::t('app', 'Статус'),
             'soob' => Yii::t('app', 'Сообщение'),
         ];

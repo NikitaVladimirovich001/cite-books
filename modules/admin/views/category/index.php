@@ -26,7 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'id',
                 'name',
                 'opisanie:ntext',
-                'image',
+                [
+                    'attribute' => 'image',
+                    'format' => 'html',
+                    'value' => function ($model) {
+                        return Html::img(Yii::$app->request->BaseUrl . '/image/genres/' . $model->image, ['width' => '100']);
+                    },
+                ],
                 [
                     'class' => ActionColumn::className(),
                     'urlCreator' => function ($action, Category $model, $key, $index, $column) {

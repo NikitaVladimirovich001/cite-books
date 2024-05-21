@@ -3,9 +3,10 @@
 namespace app\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
 /**
- * This is the model class for table "category".
+ * Это класс модели для таблицы «категория».
  *
  * @property int $id
  * @property string $name
@@ -30,10 +31,10 @@ class Category extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-//            [['name', 'opisanie', 'image'], 'required'],
-            [['opisanie'], 'string'],
-            [['image'], 'file', 'extensions' => 'png, jpg', 'on'=>'update'],
+            [['name', 'opisanie', 'image'], 'required'],
             [['name'], 'string', 'max' => 256],
+            ['opisanie', 'string'],
+            ['image', 'file', 'extensions' => 'png, jpg', 'on' => 'update'],
         ];
     }
 
@@ -51,7 +52,7 @@ class Category extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Books]].
+     * Получает запрос для [[Books]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -59,7 +60,6 @@ class Category extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Books::class, ['category_id' => 'id']);
     }
-
 
     public function upload()
     {

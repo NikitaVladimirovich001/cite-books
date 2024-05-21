@@ -2,10 +2,8 @@
 
 /** @var yii\web\View $this */
 
-use app\models\Favorites;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
-use yii\helpers\Url;
 
 $this->title = 'Книга';
 ?>

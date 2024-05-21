@@ -29,7 +29,7 @@ $it = \app\models\Author::find()
 
     <?= $form->field($model, 'image')->fileInput() ?>
 
-    <?= $form->field($model, 'date')->textInput() ?>
+<!--    --><?//= $form->field($model, 'date')->textInput() ?>
 
     <?= $form->field($model, 'author_id')->dropDownList($it, ['prompt'=>'Выйбирите автора книги'])  ?>
 

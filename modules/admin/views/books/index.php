@@ -27,8 +27,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
             'opisanie:ntext',
+//            'viewed',
             'file:ntext',
-            'image',
+            [
+                'attribute' => 'image',
+                'format' => 'html',
+                'value' => function ($model) {
+                    return Html::img(Yii::$app->request->BaseUrl . '/image/books/' . $model->image, ['width' => '100']);
+                },
+            ],
             //'date',
             [
                 'attribute' => 'author_id',
