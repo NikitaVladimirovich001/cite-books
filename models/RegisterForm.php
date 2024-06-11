@@ -32,11 +32,10 @@ class RegisterForm extends Model
             // username and password are both required
             [['username', 'name', 'surname', 'email', 'password', 'password_repeat', 'telefon', ], 'required'],
             ['email', 'email'],
-            ['telefon', 'string'],
             ['username', 'unique', 'targetClass'=>'app\models\User', 'message'=>'Пользователь с таким иминем уже существует'],
             ['telefon', 'unique', 'targetClass'=>'app\models\User', 'message'=>'Пользователь с таким телефоном уже существует'],
             ['email', 'unique', 'targetClass'=>'app\models\User', 'message'=>'Пользователь с такой почтой уже существует'],
-            ['patronymic', 'string'],
+            [['patronymic', 'telefon'], 'string', 'max'=>256],
             [['name', 'surname', 'patronymic'], 'match', 'pattern'=>'/^[а-яёА-ЯЁ]++$/u', 'message'=>'Это поле должно содержать буквы русского алфавита'],
             ['password', 'string', 'min'=>6],
             ['password_repeat', 'string', 'min'=>6],

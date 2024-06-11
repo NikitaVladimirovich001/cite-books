@@ -180,9 +180,9 @@ class SiteController extends Controller
         $user_id = Yii::$app->user->id;
 
         // Увеличить счетчик просмотров книги в Redis
-//        $redis = Yii::$app->redis;
-//        $redis->incr("book:$id:views");
-//        $views = $redis->get("book:$id:views");
+//    $redis = Yii::$app->redis;
+//    $redis->incr("book:$id:views");
+//    $views = $redis->get("book:$id:views");
 
         $addToFavoriteUrl = Url::to(['site/add-to-favorite', 'id' => $books->id]);
         $removeFromFavoriteUrl = Url::to(['site/remove-from-favorite', 'id' => $books->id]);
@@ -221,11 +221,40 @@ class SiteController extends Controller
 
         $favorite = Favorites::findOne(['user_id' => $user_id, 'books_id' => $id]);
 
-        $context = ['author' => $author, 'books' => $books, 'model' => $model, 'comments' => $comments,
-            'addToFavoriteUrl' => $addToFavoriteUrl, 'removeFromFavoriteUrl' => $removeFromFavoriteUrl,
-            'favorite' => $favorite];
+        // Получаем текст книги и разбиваем на страницы
+        $filePath = 'file/' . $books->file;
+        $pages = $this->getBookPages($filePath);
+
+        // Получаем номер страницы из запроса
+        $pageNumber = Yii::$app->request->get('page', 1);
+        $pageNumber = max(1, min($pageNumber, count($pages))); // Проверяем, что номер страницы в пределах допустимого
+
+        $currentPageContent = $pages[$pageNumber - 1];
+
+        $context = [
+            'author' => $author,
+            'books' => $books,
+            'model' => $model,
+            'comments' => $comments,
+            'addToFavoriteUrl' => $addToFavoriteUrl,
+            'removeFromFavoriteUrl' => $removeFromFavoriteUrl,
+            'favorite' => $favorite,
+            'currentPageContent' => $currentPageContent,
+            'totalPages' => count($pages),
+            'currentPage' => $pageNumber,
+        ];
 
         return $this->render('books', $context);
+    }
+
+    private function getBookPages($filePath, $pageSize = 2000)
+    {
+        $content = file_get_contents($filePath);
+        $content = mb_convert_encoding($content, 'UTF-8', 'auto');
+
+        // Разделение строки на части с учетом многобайтовых символов
+        $pages = mb_str_split($content, $pageSize);
+        return $pages;
     }
 
 

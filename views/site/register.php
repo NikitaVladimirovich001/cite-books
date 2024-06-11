@@ -39,7 +39,7 @@ $this->title = 'Регистрация';
         <?= $form->field($model, 'email', ['labelOptions' => ['class' => 'label_my']])->textInput(['autofocus' => true, 'class' => 'my-input-class']) ?>
 
         <?= $form->field($model, 'telefon', ['labelOptions' => ['class' => 'label_my']])->widget(\yii\widgets\MaskedInput::class, [
-            'mask' => '+7(999)-999-99-99',
+            'mask' => '+7 (999) 999 99 99',
             'options' => ['class' => 'my-input-class']
         ]) ?>
 

@@ -149,14 +149,14 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <div class="footer-container">
             <h3 class="footer-h">Мы всегда готовы вам помочь</h3>
             <?php if (Yii::$app->user->isGuest): ?>
-                <li class="footer-li"><a href="<?= Url::to(['/site/login']) ?>">Оставить заявку</a></li>
+                <li class="footer-li"><a href="<?= Url::to(['/site/login']) ?>">Задать вопрос</a></li>
             <?php else: ?>
-                <li class="footer-li"><a href="<?= Url::to(['/site/proposal']) ?>">Оставить заявку</a></li>
+                <li class="footer-li"><a href="<?= Url::to(['/site/proposal']) ?>">Задать вопрос</a></li>
             <?php endif; ?>
         </div>
         <hr class="footer-hr">
         <div class="f">
-            <p class="footer-p">© 2023 КнигаТут.</p>
+            <p class="footer-p">© 2024 КнигаТут.</p>
             <p class="footer-p">Проект разработан Лапиным Никитой В.</p>
         </div>
     </footer>

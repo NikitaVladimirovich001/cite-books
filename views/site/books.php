@@ -48,13 +48,25 @@ $this->title = 'Книга';
                     </ul>
                 </div>
             </div>
+
+
             <div class="books-reding-content-wrap">
                 <div class="books-reding-content" id="content">
                     <div class="books-reding-content-container-p">
-                        <p class="books-reding" id="bookText"><?= nl2br(file_get_contents('file/' . $books['file'])) ?></p>
+                        <p class="books-reding" id="bookText"><?= nl2br($currentPageContent) ?></p>
                     </div>
                 </div>
             </div>
+
+            <div class="pagination-form">
+                <form method="get" action="">
+<!--                    <label for="page">Введите номер страницы:</label>-->
+                    <input type="number" id="page" name="page" min="1" max="<?= $totalPages ?>" value="<?= $currentPage ?>">
+                    <button class="button_list" type="submit">Перейти</button>
+                </form>
+                <p>Страница <?= $currentPage ?> из <?= $totalPages ?></p>
+            </div>
+
 
             <script>
                 // Изменение размера

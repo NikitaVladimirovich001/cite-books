@@ -1,5 +1,5 @@
-let lightTheme = "css/light.css";
-let darkTheme = 'css/site.css';
+let lightTheme = "/css/light.css";
+let darkTheme = '/css/site.css';
 let lightImage = "image/bel_fon.jpg";
 let darkImage = "image/genres/horror.png";
 

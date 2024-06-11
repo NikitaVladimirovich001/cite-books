@@ -1,4 +1,4 @@
+Options +FollowSymlinks
 RewriteEngine on
-RewriteRule ^(.*) web/$q [L]
-
-
+RewriteCond %{REQUEST_URL}% !^(web)
+RewriteRule (.*) /web/$1
